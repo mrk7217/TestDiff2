@@ -14,11 +14,31 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public class FileCompTest {
-	private final File original = new File("/Users/margaretknoblock/Documents/Summer2016/nodep3.0.txt");
+	private final File original = new File("/Users/margaretknoblock/Documents/Summer2016/originalFile.txt");
 
-    private final File revised = new File("/Users/margaretknoblock/Documents/Summer2016/nodep3.1.txt");
+    private final File revised = new File("/Users/margaretknoblock/Documents/Summer2016/revisedFile.txt");
     
     @Test
+    public void getAllDiffsBetweenFiles(){
+    	final FileComp comparator = new FileComp(original, revised);
+    	try{
+    		final List<Chunk> diffsFromOriginal = comparator.getAllDiffs();
+        	final List<Delta> deltasFromOriginal = comparator.getDeltas();
+        	if(diffsFromOriginal.size() > 0){
+            	System.out.println("New file has differences. Differences are:");
+            	for(int i=0;i<diffsFromOriginal.size();i++){
+            		System.out.println(diffsFromOriginal.get(i));
+            		System.out.println();
+            	}
+            }
+        } 
+    	catch (IOException ioe) {
+            fail("Error running test shouldGetChangesBetweenFiles " + ioe.toString());
+        }
+ 
+    }
+    
+    /*@Test
     public void shouldGetChangesBetweenFiles() {
         final FileComp comparator = new FileComp(original, revised);
  
@@ -80,5 +100,5 @@ public class FileCompTest {
         } catch (IOException ioe) {
             fail("Error running test shouldGetDeletesBetweenFiles " + ioe.toString());
         }
-    }
+    }*/
 }
