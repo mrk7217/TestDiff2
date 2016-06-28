@@ -1,4 +1,9 @@
 import difflib.Chunk;
+import difflib.Delta;
+import difflib.DiffRowGenerator;
+import difflib.DiffUtils;
+import difflib.Patch;
+
 import org.junit.Test;
  
 import java.io.File;
@@ -10,17 +15,21 @@ import static org.junit.Assert.fail;
 
 public class FileCompTest {
 	private final File original = new File("/Users/margaretknoblock/Documents/Summer2016/nodep3.0.txt");
-	 
+
     private final File revised = new File("/Users/margaretknoblock/Documents/Summer2016/nodep3.1.txt");
- 
+    
     @Test
     public void shouldGetChangesBetweenFiles() {
- 
         final FileComp comparator = new FileComp(original, revised);
  
         try {
         	final List<Chunk> changesFromOriginal = comparator.getChangesFromOriginal();
-            if(changesFromOriginal.size() > 0){
+        	final List<Delta> deltasFromOriginal = comparator.getDeltas();
+        	for(int i=0;i<deltasFromOriginal.size();i++){
+        		System.out.println(deltasFromOriginal.get(i));
+        		System.out.println();
+        	}
+        	if(changesFromOriginal.size() > 0){
             	System.out.println("New file has changes. Changes are:");
             	for(int i=0;i<changesFromOriginal.size();i++){
             		System.out.println(changesFromOriginal.get(i));

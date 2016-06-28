@@ -43,7 +43,7 @@ public class FileComp {
         return listOfChanges;
     }
  
-    private List<Delta> getDeltas() throws IOException {
+    public List<Delta> getDeltas() throws IOException {
  
         final List<String> originalFileLines = fileToLines(original);
         final List<String> revisedFileLines = fileToLines(revised);
