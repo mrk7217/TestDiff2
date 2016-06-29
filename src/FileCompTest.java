@@ -25,40 +25,8 @@ public class FileCompTest {
  
         try {
         	final List<Chunk> changesFromOriginal = comparator.getChangesFromOriginal();
-        	
-        	if(changesFromOriginal.size() == 0){
-        		System.out.println("These 2 files are the same");
-        		System.out.println();
-        	}
-        	
-        	else{
-
-        		System.out.println("New file has changes. Changes are:");
-            	for(int i=0;i<changesFromOriginal.size();i++){
-            		System.out.println(changesFromOriginal.get(i));
-            		System.out.println();
-        	}
-        	
-        	if(changesFromOriginal.size() == 1){
-        		System.out.println("Are these 2 files the same (yes or no)?");
-        		String input = a.nextLine();
-        		if(input.equals("Yes") || input.equals("yes")){
-        			System.out.println("These 2 files are the same");
-        			System.out.println();
-        		}
-        		
-        		else if(input.equals("No") || input.equals("no")){
-        			System.out.println("These 2 files are different");
-        			System.out.println();
-        		}
-        	}
-        	
-        	if(changesFromOriginal.size() >= 3){
-        		System.out.println("It is possible that these 2 files are different");
-        		System.out.println();
-            	}
-        	}
         }
+    
 
         	
         catch (IOException ioe) {
