@@ -26,7 +26,20 @@ public class FileCompTest {
         try {
         	final List<Chunk> changesFromOriginal = comparator.getChangesFromOriginal();
         	
-        	if(changesFromOriginal.size() == 0){
+        }
+        	/* for(int i = 0; i < changesFromOriginal.size(); i++){
+        		
+        	}
+        	
+        	
+        	
+        	
+        	
+        	
+        }
+        	
+        	
+        	  if(changesFromOriginal.size() == 0){
         		System.out.println("These 2 files are the same");
         		System.out.println();
         	}
@@ -59,6 +72,7 @@ public class FileCompTest {
             	}
         	}
         }
+        */
 
         	
         catch (IOException ioe) {
