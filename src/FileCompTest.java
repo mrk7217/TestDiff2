@@ -1,4 +1,107 @@
 import difflib.Chunk;
+import difflib.Delta;
+
+import org.junit.Test;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+public class FileCompTest {
+	private final File original = new File("/Users/mikaylaminton/Documents/originalFile.txt");
+
+    private final File revised = new File("/Users/mikaylaminton/Documents/revisedFile.txt");
+    
+    @Test
+    public void getAllDiffsBetweenFiles(){
+    	final FileComp comparator = new FileComp(original, revised);
+    	try{
+    		final List<Chunk> diffsFromOriginal = comparator.getAllDiffs();
+    	
+        	
+        	ArrayList <String> list = new ArrayList<String>();
+        	
+        	for(int a = 0; a < diffsFromOriginal.size(); a++){
+        		list.add(diffsFromOriginal.get(a).toString());
+        		
+        	}
+        	
+        	
+        	System.out.println(list);
+        	
+    		//String test1 = list.get(0);
+    		//String test2 = list.get(1);
+    		//System.out.println(test1 + ", " + test2);
+    		//System.out.println();
+    		//System.out.println(list.get(0).length());
+    		
+    		//System.out.println(poop.indexOf('l'));
+    		
+    		
+        	for(int c = 0; c < list.size(); c++){
+        		if(list.get(c).charAt(12) == ','){
+        			if(list.get(c).charAt(21) == ','){
+        				if(list.get(c).substring(31) == ){
+        					
+        				}
+        				
+        			}
+        			
+        		}
+        	}
+        	
+    		ArrayList <Character> list2 = new ArrayList<Character>();
+    		
+    		for(int m = 0; m < list.size(); m++){
+    			for(int n = 0; n < list.get(m).length(); n++){
+    				list2.add(list.get(m).charAt(n));
+    			}
+    		}
+    		
+			//System.out.println(list2);
+			
+			
+			
+
+          	
+        	
+        	if(diffsFromOriginal.size() > 0){
+            	System.out.println("New file has differences. Differences are:");
+            	for(int i=0;i<diffsFromOriginal.size();i++){
+            		System.out.println(diffsFromOriginal.get(i));
+            		System.out.println();
+            	}
+            }
+        } 
+    	catch (IOException ioe) {
+            fail("Error running test shouldGetChangesBetweenFiles " + ioe.toString());
+        }
+ 
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* import difflib.Chunk;
 import org.junit.Test;
  
 import java.io.File;
@@ -72,7 +175,6 @@ public class FileCompTest {
             	}
         	}
         }
-        */
 
         	
         catch (IOException ioe) {
@@ -121,3 +223,5 @@ public class FileCompTest {
         }
     }
 }
+
+*/

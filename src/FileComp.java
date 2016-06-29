@@ -20,6 +20,16 @@ public class FileComp {
         this.revised = revised;
     }
  
+    public List<Chunk> getAllDiffs() throws IOException {
+    	final List<Chunk> listOfDiffs = new ArrayList<Chunk>();
+        final List<Delta> deltas = getDeltas();
+        for (Delta delta : deltas) {
+        	listOfDiffs.add(delta.getRevised());
+        }
+        return listOfDiffs;
+        
+    }
+    
     public List<Chunk> getChangesFromOriginal() throws IOException {
         return getChunksByType(Delta.TYPE.CHANGE);
     }
@@ -43,7 +53,7 @@ public class FileComp {
         return listOfChanges;
     }
  
-    private List<Delta> getDeltas() throws IOException {
+    public List<Delta> getDeltas() throws IOException {
  
         final List<String> originalFileLines = fileToLines(original);
         final List<String> revisedFileLines = fileToLines(revised);
