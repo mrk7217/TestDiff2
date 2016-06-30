@@ -24,7 +24,7 @@ public class FileRead {
 			fullFile = csvReader.readAll();
 			for(int i=1;i<10;i++){ //starts at one to skip the titles of each column
 				tempRow = (String[]) fullFile.get(i);
-				System.out.println(tempRow[licenseRow]); //access only the desired column
+				System.out.println(tempRow[urlRow]); //access only the desired column
 				
 			}
 			csvReader.close();
