@@ -12,25 +12,27 @@ public class FileRead {
 	private final String csvFilename = "/Users/margaretknoblock/Downloads/otherLic.csv";
 	List<String[]> fullFile = null;
 	String[] tempRow = null;
-	final int licenseRow = 5;
-	final int licenseDetailedRow = 6;
-	final int urlRow = 7;
-	 
-	@Test
-	public void accessFile(){
+	
+	public String accessFile(int row, int col){
+		String info = new String();
 		try{
-			FileReader read = new FileReader(csvFilename); //need to figure out how to fix thissss
+			FileReader read = new FileReader(csvFilename); 
 			CSVReader csvReader = new CSVReader(read);
 			fullFile = csvReader.readAll();
-			for(int i=1;i<10;i++){ //starts at one to skip the titles of each column
-				tempRow = (String[]) fullFile.get(i);
-				System.out.println(tempRow[urlRow]); //access only the desired column
-				
+			if (row >0){ //row can not be the title row
+				tempRow = (String[]) fullFile.get(row);
+				info = tempRow[col]; //access only the desired column
 			}
 			csvReader.close();
+			return info;
 		} 
 		catch(IOException ex){	
 			ex.printStackTrace();
+			return null;
 		}
+	}
+	
+	public int numRows(){
+		return fullFile.size(); //only gets the size of a null fullFile, need to fix this
 	}
 }
