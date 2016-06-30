@@ -3,7 +3,9 @@ import difflib.Delta;
 
 import org.junit.Test;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +33,74 @@ public class FileCompTest {
         	}
         	
         	
-        	System.out.println(list);
+        	//System.out.println(list);
+        	//System.out.println();
+        	
+        	ArrayList <String> ogFileArray = new ArrayList<String>(); //ORIGINAL FILE STRING ARRAY
+        	
+        	try (BufferedReader br = new BufferedReader(new FileReader("/Users/mikaylaminton/Documents/originalFile.txt"))){
+        		    for (String line; (line = br.readLine()) != null;) {
+        		    	ogFileArray.add(line);
+        		    	
+        		    }
+        		        System.out.println(ogFileArray);
+        		        System.out.println();
+        		    }
+        	
+        	ArrayList <String> rvFileArray = new ArrayList<String>(); //REVISED FILE STRING ARRAY
+        	
+        	try (BufferedReader br = new BufferedReader(new FileReader("/Users/mikaylaminton/Documents/revisedFile.txt"))){
+        		    for (String line; (line = br.readLine()) != null;) {
+        		    	rvFileArray.add(line);
+        		    	
+        		    }
+        		        System.out.println(rvFileArray);
+        		        System.out.println();
+        		    }
+        	
+        	ArrayList <Character> ogFileCharArray = new ArrayList<Character>(); //ORIGINAL FILE CHAR ARRAY
+    		
+    		for(int m = 0; m < ogFileArray.size(); m++){
+    			for(int n = 0; n < ogFileArray.get(m).length(); n++){
+    				ogFileCharArray.add(ogFileArray.get(m).charAt(n));
+    			}
+    		}
+    		
+    		ArrayList <Character> rvFileCharArray = new ArrayList<Character>(); //REVISED FILE CHAR ARRAY
+    		
+    		for(int m = 0; m < rvFileArray.size(); m++){
+    			for(int n = 0; n < rvFileArray.get(m).length(); n++){
+    				rvFileCharArray.add(rvFileArray.get(m).charAt(n));
+    			}
+    		}
+        	
+        	/*for(int a = 0; a < revisedFileArray.size(); a++){
+        		if(revisedFileArray.get(a) != originalFileArray.get(a)){
+        			
+        		}
+        	}
+        	
+        	*/
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        		    
+        		    /*for(int c = 0; c < list.size(); c++){
+                		if(list.get(c).charAt(12) == ','){
+                			if(list.get(c).charAt(21) == ','){
+                				for(int d = 31; d < 50; d++){
+                					if(list.get(c).charAt(d) ==  ){
+                						
+                					}
         	
     		//String test1 = list.get(0);
     		//String test2 = list.get(1);
@@ -40,19 +109,9 @@ public class FileCompTest {
     		//System.out.println(list.get(0).length());
     		
     		//System.out.println(poop.indexOf('l'));
-    		
-    		
-        	for(int c = 0; c < list.size(); c++){
-        		if(list.get(c).charAt(12) == ','){
-        			if(list.get(c).charAt(21) == ','){
-        				if(list.get(c).substring(31) == ){
-        					
-        				}
-        				
-        			}
-        			
-        		}
-        	}
+    			
+        	*/
+        	
         	
     		ArrayList <Character> list2 = new ArrayList<Character>();
     		
@@ -63,11 +122,7 @@ public class FileCompTest {
     		}
     		
 			//System.out.println(list2);
-			
-			
-			
-
-          	
+				
         	
         	if(diffsFromOriginal.size() > 0){
             	System.out.println("New file has differences. Differences are:");
