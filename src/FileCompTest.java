@@ -46,7 +46,23 @@ public class FileCompTest {
         		        System.out.println(ogFileArray);
         		        System.out.println();
         		    }
+        	ArrayList <String> ogFileArraySpaces = new ArrayList<String>(); //ORIGINAL FILE STRING ARRAY W SPACES       
+
         	
+
+        		
+   	
+   	     	
+        	/*for(int d = 0; d < ogFileArray.size(); d++){
+        		for(int e = 0; e < ogFileArray.get(d).length(); e++){
+        			if(ogFileArray.get(d).substring(e,(e+1)) == " "){
+        				test1 = ogFileArray.get(d).substring(0, (ogFileArray.get(d).indexOf(" ")-1));
+        				test2 = ogFileArray.get(d).substring((ogFileArray.get(d).indexOf(" ")+1), 
+        				
+        			}
+        			
+        			*/
+        			
         	ArrayList <String> rvFileArray = new ArrayList<String>(); //REVISED FILE STRING ARRAY
         	
         	try (BufferedReader br = new BufferedReader(new FileReader("/Users/mikaylaminton/Documents/revisedFile.txt"))){
@@ -58,6 +74,28 @@ public class FileCompTest {
         		        System.out.println();
         		    }
         	
+        	String str = "";
+        	for(int d = 0; d < ogFileArray.size(); d++){
+        		for(int e = 0; e < ogFileArray.get(d).length(); e++){
+        			if(ogFileArray.get(d).charAt(e) != ' ' ){
+        				if(e == ogFileArray.get(d).length()-1){
+        					str = "";
+        				}
+        				str += ogFileArray.get(d).charAt(e);
+        			}
+        			else{
+        				ogFileArraySpaces.add(str);
+        				str = "";
+        			}
+
+        		}
+        	}
+        	System.out.println(ogFileArraySpaces);
+        	
+        	
+        	
+        	
+        	
         	ArrayList <Character> ogFileCharArray = new ArrayList<Character>(); //ORIGINAL FILE CHAR ARRAY
     		
     		for(int m = 0; m < ogFileArray.size(); m++){
@@ -65,6 +103,8 @@ public class FileCompTest {
     				ogFileCharArray.add(ogFileArray.get(m).charAt(n));
     			}
     		}
+    		//System.out.println(ogFileCharArray);
+			//System.out.println();
     		
     		ArrayList <Character> rvFileCharArray = new ArrayList<Character>(); //REVISED FILE CHAR ARRAY
     		
@@ -73,17 +113,32 @@ public class FileCompTest {
     				rvFileCharArray.add(rvFileArray.get(m).charAt(n));
     			}
     		}
-        	
-        	/*for(int a = 0; a < revisedFileArray.size(); a++){
-        		if(revisedFileArray.get(a) != originalFileArray.get(a)){
+    		//System.out.println(rvFileCharArray);
+			//System.out.println();
+			
+			boolean sameLicense = true;
+			
+			if(sameLicense == true){
+				System.out.println("The license is the same");
+			}
+			else{
+				System.out.println("The license is not the same ");
+			}
+			
+			
+			
+        	for(int a = 0; a < rvFileArray.size(); a++){
+        		if(rvFileArray.get(a) != ogFileArray.get(a)){
+        			
+        			
+        			
+        			
         			
         		}
-        	}
-        	
-        	*/
-        	
-        	
-        	
+        			
+        		}
+        	//index
+        	//every time there's a difference, add to sum and if less than 10 ask user, if 10 or more, assume different
         	
         	
         	
