@@ -33,7 +33,7 @@ public class UpdateLicense {
    * 
    */
 	FileRead fileReader = new FileRead();
-	int currentRow = 1;
+	int currentRow = 3223;
 	final int licenseCol = 5;
 	final int licenseDetailedCol = 6;
 	final int urlCol = 7;
@@ -45,6 +45,7 @@ public class UpdateLicense {
 	}
 	
 	public void checkSameLicense(){
+		fileReader.openFile();
 		//if licensedetailed the same means same license add that if statement in here
 		/*if (fileReader.accessFile(currentRow+1, updatedLicenseCol) == ""){ //checks to see if second url already has a license
 			fileReader.accessFile(currentRow,licenseCol);
@@ -54,8 +55,15 @@ public class UpdateLicense {
 		}*/
 		
 		//***was testing how i plan to check if at the end of the spreadsheet DOES NOT WORK AS OF 6/30
+		
 		System.out.println(fileReader.numRows());
-		//System.out.println(fileReader.accessFile(3226, 0));
+		System.out.println(fileReader.accessFile(5, 7));
+		if (reachedEnd())
+			System.out.println("you have reached the end");
+		else
+			System.out.println("notend");
+
+		fileReader.closeFile();//should put at reached end once done testing
 	}
 	
 	public void writeLicense(){
@@ -73,9 +81,8 @@ public class UpdateLicense {
 		}
 	}
 	
-	//DOES NOT WORK AS OF 6/30 NEED TO FIX
 	public boolean reachedEnd(){
-		if(fileReader.accessFile(currentRow +1, 0) == null) //does not give back null when at the end
+		if(currentRow==fileReader.numRows()-1) 
 			return true;
 		else
 			return false;
