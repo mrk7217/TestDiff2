@@ -33,37 +33,56 @@ public class UpdateLicense {
    * 
    */
 	FileRead fileReader = new FileRead();
-	int currentRow = 3223;
+	int currentRow = 1; //cant start at row zero because titles are there
 	final int licenseCol = 5;
 	final int licenseDetailedCol = 6;
 	final int urlCol = 7;
 	final int updatedLicenseCol = 9;
+	boolean sameLicense = false;
 	
 	@Test
 	public void updateLicenses(){
+		fileReader.openFile();
 		checkSameLicense();
+		fileReader.closeFile();//should put at reached end once done testing
 	}
 	
 	public void checkSameLicense(){
-		fileReader.openFile();
-		//if licensedetailed the same means same license add that if statement in here
-		/*if (fileReader.accessFile(currentRow+1, updatedLicenseCol) == ""){ //checks to see if second url already has a license
-			fileReader.accessFile(currentRow,licenseCol);
+		//if licensedetailed the same means same license add that if statement in here (would not be other)
+		if (fileReader.accessFile(currentRow+1, updatedLicenseCol).isEmpty()){ //checks to see if second url already has a license
+			if (fileReader.accessFile(currentRow,urlCol) == fileReader.accessFile(currentRow+1, urlCol)){
+				System.out.println("Same Url");
+			}
+			else{
+				String urlName1 = fileReader.accessFile(currentRow, urlCol);
+				String urlName2 = fileReader.accessFile(currentRow+1, urlCol);
+				String urlEnd1 = (urlName1.substring(urlName1.lastIndexOf('.') + 1));
+				String urlEnd2 = (urlName2.substring(urlName2.lastIndexOf('.') + 1));
+				String ul1 = fileReader.accessFile(currentRow, licenseDetailedCol);
+				String ul2 = fileReader.accessFile(currentRow+1, licenseDetailedCol);
+				//checks to see if they are both pom files and have the same license detailed column (that isn't other)
+				if (((urlEnd1.equals("pom")) && (urlEnd2.equals("pom"))) && (!fileReader.accessFile(currentRow, licenseDetailedCol).equals("Other")) && (ul1.equals(ul2))){
+					System.out.println("Same license detailed (both pom)");
+				}
+				else{
+					System.out.println("Not same url or same detailed");
+					//need to do wget and file comparison
+				}
+			}
 		}
 		else{ //if second url already has a license, moves to next one
-			nextURL();
-		}*/
+			System.out.println("not empty");
+			System.out.println(fileReader.accessFile(currentRow+1, updatedLicenseCol));
+			//nextURL();
+		}
 		
-		//***was testing how i plan to check if at the end of the spreadsheet DOES NOT WORK AS OF 6/30
+		if (sameLicense){
+			//write in updated license
+		}
+		else{
+			//write in stars or somethin else
+		}
 		
-		System.out.println(fileReader.numRows());
-		System.out.println(fileReader.accessFile(5, 7));
-		if (reachedEnd())
-			System.out.println("you have reached the end");
-		else
-			System.out.println("notend");
-
-		fileReader.closeFile();//should put at reached end once done testing
 	}
 	
 	public void writeLicense(){
@@ -82,7 +101,7 @@ public class UpdateLicense {
 	}
 	
 	public boolean reachedEnd(){
-		if(currentRow==fileReader.numRows()-1) 
+		if(currentRow==fileReader.numRows()-2) //subtract two to get second to last location (starts at location 0) 
 			return true;
 		else
 			return false;
