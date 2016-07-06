@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -43,26 +44,12 @@ public class FileCompTest {
         		    	ogFileArray.add(line);
         		    	
         		    }
-        		        System.out.println(ogFileArray);
-        		        System.out.println();
-        		    }
-        	ArrayList <String> ogFileArraySpaces = new ArrayList<String>(); //ORIGINAL FILE STRING ARRAY W SPACES       
-
+        		    System.out.println("Original file:");   
+        		    System.out.println(ogFileArray);
+        		    System.out.println();
+        	}
+        	       
         	
-
-        		
-   	
-   	     	
-        	/*for(int d = 0; d < ogFileArray.size(); d++){
-        		for(int e = 0; e < ogFileArray.get(d).length(); e++){
-        			if(ogFileArray.get(d).substring(e,(e+1)) == " "){
-        				test1 = ogFileArray.get(d).substring(0, (ogFileArray.get(d).indexOf(" ")-1));
-        				test2 = ogFileArray.get(d).substring((ogFileArray.get(d).indexOf(" ")+1), 
-        				
-        			}
-        			
-        			*/
-        			
         	ArrayList <String> rvFileArray = new ArrayList<String>(); //REVISED FILE STRING ARRAY
         	
         	try (BufferedReader br = new BufferedReader(new FileReader("/Users/mikaylaminton/Documents/revisedFile.txt"))){
@@ -70,11 +57,15 @@ public class FileCompTest {
         		    	rvFileArray.add(line);
         		    	
         		    }
-        		        System.out.println(rvFileArray);
-        		        System.out.println();
-        		    }
+        		    
+        		    System.out.println("Revised file:");
+        		    System.out.println(rvFileArray);
+        		    System.out.println();
+        	}
         	
-        	String str = "";
+        	ArrayList <String> ogFileArraySpaces = new ArrayList<String>(); //ORIGINAL FILE STRING ARRAY W SPACES
+        	
+        	String str = ""; //ORIGINAL FILE ARRAY BY SPACES
         	for(int d = 0; d < ogFileArray.size(); d++){
         		for(int e = 0; e < ogFileArray.get(d).length(); e++){
         			if(ogFileArray.get(d).charAt(e) != ' ' && e == ogFileArray.get(d).length()-1){
@@ -94,105 +85,86 @@ public class FileCompTest {
         		str = "";
         	}
         	System.out.println(ogFileArraySpaces);
+        	System.out.println();
         	
         	
+        	ArrayList <String> rvFileArraySpaces = new ArrayList<String>(); //REVISED FILE STRING ARRAY W SPACES
         	
-        	ArrayList <Character> ogFileCharArray = new ArrayList<Character>(); //ORIGINAL FILE CHAR ARRAY
-    		
-    		for(int m = 0; m < ogFileArray.size(); m++){
-    			for(int n = 0; n < ogFileArray.get(m).length(); n++){
-    				ogFileCharArray.add(ogFileArray.get(m).charAt(n));
-    			}
-    		}
-    		//System.out.println(ogFileCharArray);
-			//System.out.println();
-    		
-    		ArrayList <Character> rvFileCharArray = new ArrayList<Character>(); //REVISED FILE CHAR ARRAY
-    		
-    		for(int m = 0; m < rvFileArray.size(); m++){
-    			for(int n = 0; n < rvFileArray.get(m).length(); n++){
-    				rvFileCharArray.add(rvFileArray.get(m).charAt(n));
-    			}
-    		}
-    		//System.out.println(rvFileCharArray);
-			//System.out.println();
-			
-			boolean sameLicense = true;
-			
-			if(sameLicense == true){
-				System.out.println("The license is the same");
+        	String str2 = ""; //REVISED FILE ARRAY BY SPACES
+        	for(int d = 0; d < rvFileArray.size(); d++){
+        		for(int e = 0; e < rvFileArray.get(d).length(); e++){
+        			if(rvFileArray.get(d).charAt(e) != ' ' && e == rvFileArray.get(d).length()-1){
+        				str2 += rvFileArray.get(d).charAt(e);
+        				rvFileArraySpaces.add(str2);
+        				str2 = "";
+        			}
+        			if(rvFileArray.get(d).charAt(e) != ' '){
+        				str2 += rvFileArray.get(d).charAt(e);
+        			}
+        			
+        			else if(rvFileArray.get(d).charAt(e) == ' '){
+        				rvFileArraySpaces.add(str2);
+        				str2 = "";
+        			}
+        		}
+        		str2 = "";
+        	}
+        	System.out.println(rvFileArraySpaces);
+        	System.out.println();
+        	
+        	Scanner sc = new Scanner(System.in);
+        	String same = "";
+        	
+        	boolean sameLicense = true;
+        	
+        	int sum = 0;
+        	for(int f = 0; f < ogFileArraySpaces.size(); f++){
+        		if(ogFileArraySpaces.get(f) != rvFileArraySpaces.get(f)){
+        			sum++;
+        		}
+        	}	
+
+        	if(sum < 10){
+        		System.out.println("Are these licenses the same?");
+        		same = sc.nextLine();
+        		//if(same == "Yes" || same == "yes"){
+        		//}
+        	}
+        	else{
+        		sameLicense = false;
+        	}
+		
+        	if(sameLicense == true){
+				System.out.println("These licenses the same");
 			}
 			else{
-				System.out.println("The license is not the same ");
+				System.out.println("These licenses are different");
 			}
-			
-			
-			
-        	for(int a = 0; a < rvFileArray.size(); a++){
-        		if(rvFileArray.get(a) != ogFileArray.get(a)){
-        			
-        			
-        			
-        			
-        			
-        		}
-        			
-        		}
+        	
+        	
         	//index
         	//every time there's a difference, add to sum and if less than 10 ask user, if 10 or more, assume different
         	
         	
         	
         	
-        	
-        	
-        	
-        	
-        	
-        		    
-        		    /*for(int c = 0; c < list.size(); c++){
-                		if(list.get(c).charAt(12) == ','){
-                			if(list.get(c).charAt(21) == ','){
-                				for(int d = 31; d < 50; d++){
-                					if(list.get(c).charAt(d) ==  ){
-                						
-                					}
-        	
-    		//String test1 = list.get(0);
-    		//String test2 = list.get(1);
-    		//System.out.println(test1 + ", " + test2);
-    		//System.out.println();
-    		//System.out.println(list.get(0).length());
-    		
-    		//System.out.println(poop.indexOf('l'));
-    			
-        	*/
-        	
-        	
-    		ArrayList <Character> list2 = new ArrayList<Character>();
-    		
-    		for(int m = 0; m < list.size(); m++){
-    			for(int n = 0; n < list.get(m).length(); n++){
-    				list2.add(list.get(m).charAt(n));
-    			}
-    		}
-    		
-			//System.out.println(list2);
-				
+			
         	
         	if(diffsFromOriginal.size() > 0){
-            	System.out.println("New file has differences. Differences are:");
+            	//System.out.println("New file has differences. Differences are:");
             	for(int i=0;i<diffsFromOriginal.size();i++){
-            		System.out.println(diffsFromOriginal.get(i));
-            		System.out.println();
+            		//System.out.println(diffsFromOriginal.get(i));
+            		//System.out.println();
             	}
         	}
     	}
+    	
     	catch (IOException ioe) {
             fail("Error running test shouldGetChangesBetweenFiles " + ioe.toString());
     	}
     }
 }
+
 
 
 
