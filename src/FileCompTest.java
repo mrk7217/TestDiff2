@@ -77,22 +77,23 @@ public class FileCompTest {
         	String str = "";
         	for(int d = 0; d < ogFileArray.size(); d++){
         		for(int e = 0; e < ogFileArray.get(d).length(); e++){
-        			if(ogFileArray.get(d).charAt(e) != ' ' ){
-        				if(e == ogFileArray.get(d).length()-1){
-        					str = "";
-        				}
+        			if(ogFileArray.get(d).charAt(e) != ' ' && e == ogFileArray.get(d).length()-1){
         				str += ogFileArray.get(d).charAt(e);
-        			}
-        			else{
         				ogFileArraySpaces.add(str);
         				str = "";
         			}
-
+        			if(ogFileArray.get(d).charAt(e) != ' '){
+        				str += ogFileArray.get(d).charAt(e);
+        			}
+        			
+        			else if(ogFileArray.get(d).charAt(e) == ' '){
+        				ogFileArraySpaces.add(str);
+        				str = "";
+        			}
         		}
+        		str = "";
         	}
         	System.out.println(ogFileArraySpaces);
-        	
-        	
         	
         	
         	
@@ -185,20 +186,13 @@ public class FileCompTest {
             		System.out.println(diffsFromOriginal.get(i));
             		System.out.println();
             	}
-            }
-        } 
+        	}
+    	}
     	catch (IOException ioe) {
             fail("Error running test shouldGetChangesBetweenFiles " + ioe.toString());
-        }
- 
+    	}
     }
 }
-
-
-
-
-
-
 
 
 
