@@ -8,9 +8,6 @@ public class UpdateLicense {
    * 
    * 
    * **need to check to see if second file has an updated license, if it does then skip down one
-   * check url
-   * 	if same 
-   * 		sameLicense = true
    * 	else
    * 		open files (using wget)
    * 		fileread
@@ -34,16 +31,20 @@ public class UpdateLicense {
    */
 	FileRead fileReader = new FileRead();
 	int currentRow = 1; //cant start at row zero because titles are there
+	String currentLicense;
 	final int licenseCol = 5;
 	final int licenseDetailedCol = 6;
 	final int urlCol = 7;
 	final int updatedLicenseCol = 9;
 	boolean sameLicense = false;
+	String [][] updatedSheetInfo = new String[fileReader.numRows()][fileReader.numCols()];
 	
 	@Test
 	public void updateLicenses(){
 		fileReader.openFile();
-		checkSameLicense();
+		init();
+		//checkSameLicense();
+		System.out.println(fileReader.numCols());
 		fileReader.closeFile();//should put at reached end once done testing
 	}
 	
@@ -73,6 +74,7 @@ public class UpdateLicense {
 		else{ //if second url already has a license, moves to next one
 			System.out.println("not empty");
 			System.out.println(fileReader.accessFile(currentRow+1, updatedLicenseCol));
+			currentLicense = fileReader.accessFile(currentRow+1, updatedLicenseCol);
 			//nextURL();
 		}
 		
@@ -85,8 +87,26 @@ public class UpdateLicense {
 		
 	}
 	
+	public void init(){ //sets current license and puts in title row of updatedSheetInfo
+		currentLicense = fileReader.accessFile(currentRow, updatedLicenseCol);
+		for(int i = 0; i < updatedSheetInfo[0].length; i++)
+			updatedSheetInfo[0][i] = fileReader.accessFile(0, i);
+	}
+	
+	public void addRow(String[] row){ //if no license change
+		for(int i=0;i<updatedSheetInfo[0].length;i++)
+			updatedSheetInfo[currentRow][i] = row[i];
+	}
+	
+	public void addRowNewLice(String[] row){ //if the license changes
+		for(int i=0;i<updatedSheetInfo[0].length;i++)
+			updatedSheetInfo[currentRow][i] = row[i];
+		updatedSheetInfo[currentRow][updatedSheetInfo[0].length-1] = currentLicense;
+	}
+	
 	public void writeLicense(){
-		//run if licenses are the same
+		//run if licenses are the same (at end of program??)
+		
 	}
 	
 	public void nextURL(){

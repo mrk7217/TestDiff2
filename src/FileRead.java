@@ -12,7 +12,8 @@ public class FileRead { //for spreadsheet with other licenses
 	private final String csvFilename = "/Users/margaretknoblock/Downloads/otherLic.csv";
 	List<String[]> fullFile;
 	String[] tempRow = null;
-	int fullSize;
+	int numRows;
+	int numCols;
 	CSVReader csvReader;
 	
 	public void openFile(){
@@ -30,11 +31,9 @@ public class FileRead { //for spreadsheet with other licenses
 	
 	public String accessFile(int row, int col){
 		String info = new String();
-		if (row >0){ //row can not be the title row
-			tempRow = (String[]) fullFile.get(row);
-			info = tempRow[col]; //access only the desired column
-		fullSize = fullFile.size();
-		}
+		
+		tempRow = (String[]) fullFile.get(row);
+		info = tempRow[col]; //access only the desired column
 		
 		return info;
 	}
@@ -49,8 +48,13 @@ public class FileRead { //for spreadsheet with other licenses
 		}
 	}
 	
+	public int numCols(){
+		numCols = fullFile.get(0).length;
+		return numCols;
+	}
+	
 	public int numRows(){
-		fullSize = fullFile.size();
-		return fullSize; //only gets the size of a null fullFile, need to fix this
+		numRows = fullFile.size();
+		return numRows; //only gets the size of a null fullFile, need to fix this
 	}
 }
