@@ -1,4 +1,9 @@
-"a"
-"b"
-"c"
-"d"
+"eid"	"groupid"	"artifactid"	"version"	"releasedate"	"license"	"licenseDetailed"	"license_url"	"source"	"updated license"	"notes"
+"1530"	"cglib"	"cglib-nodep"	"2.2.2"	"5/10/2011 13:55:00"	"Other"	"ASF 2.0"	"https://repo1.maven.org/maven2/cglib/cglib-nodep/2.2.2/cglib-nodep-2.2.2.pom"	"mvn"	"Apache-2.0"	"Apache-2.0"
+"1530"	"cglib"	"cglib-nodep"	"2.2"	"12/1/2008 22:28:00"	"Other"	"ASF 2.0"	"https://repo1.maven.org/maven2/cglib/cglib-nodep/2.2/cglib-nodep-2.2.pom"	"mvn"	""	"Apache-2.0"
+"1530"	"cglib"	"cglib-nodep"	"3"	"4/9/2013 12:34:00"	"Other"	"ASF 2.0"	"https://repo1.maven.org/maven2/cglib/cglib-nodep/3.0/cglib-nodep-3.0.pom"	"mvn"	""	"Apache-2.0"
+"1530"	"cglib"	"cglib-nodep"	"3.1"	"12/9/2013 13:01:00"	"Other"	"ASF 2.0"	"https://repo1.maven.org/maven2/cglib/cglib-nodep/3.1/cglib-nodep-3.1.pom"	"mvn"	""	"Apache-2.0"
+"1530"	"cglib"	"cglib"	"2.2.2"	"5/10/2011 13:54:00"	"Other"	"ASF 2.0"	"https://repo1.maven.org/maven2/cglib/cglib/2.2.2/cglib-2.2.2.pom"	"mvn"	""	"Apache-2.0"
+"1530"	"cglib"	"cglib"	"2.2"	"10/28/2008 2:01:00"	"Other"	"ASF 2.0"	"https://repo1.maven.org/maven2/cglib/cglib/2.2/cglib-2.2.pom"	"mvn"	""	"Apache-2.0"
+"1530"	"cglib"	"cglib"	"3"	"3/31/2013 16:46:00"	"Other"	"ASF 2.0"	"https://repo1.maven.org/maven2/cglib/cglib/3.0/cglib-3.0.pom"	"mvn"	""	""
+										

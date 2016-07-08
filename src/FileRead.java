@@ -9,14 +9,13 @@ import org.junit.Test;
 import com.opencsv.CSVReader;
 
 public class FileRead { //for spreadsheet with other licenses
-	private final String csvFilename = "/Users/margaretknoblock/Downloads/otherLic.csv";
 	List<String[]> fullFile;
 	String[] tempRow = null;
 	int numRows;
 	int numCols;
 	CSVReader csvReader;
 	
-	public void openFile(){
+	public void openFile(String csvFilename){
 		try{
 			FileReader read = new FileReader(csvFilename); 
 			CSVReader csvReader = new CSVReader(read);
@@ -31,11 +30,15 @@ public class FileRead { //for spreadsheet with other licenses
 	
 	public String accessFile(int row, int col){
 		String info = new String();
-		
-		tempRow = (String[]) fullFile.get(row);
+		tempRow = getRow(row);
 		info = tempRow[col]; //access only the desired column
 		
 		return info;
+	}
+	
+	public String[] getRow(int row){
+		String[] currentRow = (String[]) fullFile.get(row);
+		return currentRow;
 	}
 	
 	public void closeFile(){
