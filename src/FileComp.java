@@ -19,6 +19,7 @@ public class FileComp {
         this.original = original;
         this.revised = revised;
     }
+    
  
     public List<Chunk> getChangesFromOriginal() throws IOException {
         return getChunksByType(Delta.TYPE.CHANGE);
@@ -43,7 +44,7 @@ public class FileComp {
         return listOfChanges;
     }
  
-    private List<Delta> getDeltas() throws IOException {
+    public List<Delta> getDeltas() throws IOException {
  
         final List<String> originalFileLines = fileToLines(original);
         final List<String> revisedFileLines = fileToLines(revised);

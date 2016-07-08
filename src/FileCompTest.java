@@ -1,8 +1,11 @@
 import difflib.Chunk;
+import difflib.Delta;
 
 import org.junit.Test;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,96 +24,89 @@ public class FileCompTest {
         final FileComp comparator = new FileComp(original, revised);
  
         try {
-        	final List<Chunk> changesFromOriginal = comparator.getChangesFromOriginal();
+        	
+        	final List<Delta> deltasFromOriginal = comparator.getDeltas();
+        	//for(int i=0;i<deltasFromOriginal.size();i++){
+        		//System.out.println(deltasFromOriginal.get(i));
+        		//System.out.println();
+        	//}
         	
         	ArrayList <String> list = new ArrayList<String>();
+        	
+    		for(int a = 0; a < deltasFromOriginal.size(); a++){	
+    			list.add((deltasFromOriginal.get(a)).toString());
+    		}
+    		
+    		boolean changes = false;
+    		if(deltasFromOriginal.size() > 0){
+    			for(int e = 0; e < list.size(); e++){
+    				if(list.get(e).charAt(1) == 'C'){
+    					changes = true;
+    				}
+    			}
+    			if(changes == true){
+    				System.out.println("NEW FILE HAS CHANGES. CHANGES ARE:");
+    			}
+    					for(int c = 0; c < list.size(); c++){
+    						if(list.get(c).charAt(1) == 'C'){
+    							String a = ((list.get(c)).substring((list.get(c).indexOf("lines")), list.get(c).lastIndexOf(']')));
+    							String b = (a.substring(a.indexOf('[')));
+    						System.out.println(b);
+    						System.out.println();
+    						}
+    					}
+    		}
+    		System.out.println();
 
-    		for(int a = 0; a < changesFromOriginal.size(); a++){
-    				list.add(changesFromOriginal.get(a).toString());
+    		boolean deletions = false;
+    		if(deltasFromOriginal.size() > 0){
+    			for(int e = 0; e < list.size(); e++){
+    				if(list.get(e).charAt(1) == 'D'){
+    					deletions = true;
+    				}
+    			}
+    			if(deletions == true){
+    				System.out.println("NEW FILE HAS DELETIONS. DELETIONS ARE:");
+    			}
+    					for(int c = 0; c < list.size(); c++){
+    						if(list.get(c).charAt(1) == 'D'){
+    							String a = ((list.get(c)).substring((list.get(c).indexOf("lines")), list.get(c).lastIndexOf(']')));
+    							String b = (a.substring(a.indexOf('[')));
+    						System.out.println(b);
+    						System.out.println();
+    						}
+    					}
     		}
+    		System.out.println();
     		
-    		System.out.println("New file has changes. Changes are:");  		
-    		
-    		
-    		for(int c = 0; c < list.size(); c++){
-    			System.out.println((list.get(c)).substring(list.get(c).indexOf('l')));
-    			System.out.println();
+    		boolean insertions = false;
+    		if(deltasFromOriginal.size() > 0){
+    			for(int e = 0; e < list.size(); e++){
+    				if(list.get(e).charAt(1) == 'I'){
+    					insertions = true;
+    				}
+    			}
+    			if(insertions == true){
+    				System.out.println("NEW FILE HAS INSERTIONS. INSERTIONS ARE:");
+    			}
+    					for(int c = 0; c < list.size(); c++){
+    						if(list.get(c).charAt(1) == 'I'){
+    							String a = ((list.get(c)).substring((list.get(c).indexOf("lines")), list.get(c).lastIndexOf(']')));
+    							String b = (a.substring(a.indexOf('[')));
+    						System.out.println(b);
+    						System.out.println();
+    						}
+    					}
     		}
-    		
     		System.out.println();
         }
-        
-    		    
-        catch (IOException ioe) {
-            fail("Error running test shouldGetChangesBetweenFiles " + ioe.toString());
-        }
-    }
-    
-    
-    
- 
-    @Test
-    public void shouldGetInsertsBetweenFiles() {
- 
-        final FileComp comparator = new FileComp(original, revised);
-        
-        try {
-            final List<Chunk> insertsFromOriginal = comparator.getInsertsFromOriginal();
-            
-            ArrayList <String> list2 = new ArrayList<String>();
+    		
 
-    		for(int a = 0; a < insertsFromOriginal.size(); a++){
-    				list2.add(insertsFromOriginal.get(a).toString());
-    		}
-    		
-    		System.out.println("New file has inserts. Inserts are:");  		
-    		
-    		
-    		for(int c = 0; c < list2.size(); c++){
-    			System.out.println((list2.get(c)).substring(list2.get(c).indexOf('l')));
-    			System.out.println();
-    		}
-    		
-    		System.out.println();
-        }
-            
-            
- 
-          catch (IOException ioe) {
-            fail("Error running test shouldGetInsertsBetweenFiles " + ioe.toString());
-        }
-    }
- 
-    @Test
-    public void shouldGetDeletesBetweenFiles() {
- 
-        final FileComp comparator = new FileComp(original, revised);
- 
-        try {
-            final List<Chunk> deletesFromOriginal = comparator.getDeletesFromOriginal();
-            
-            ArrayList <String> list3 = new ArrayList<String>();
-
-    		for(int a = 0; a < deletesFromOriginal.size(); a++){
-    				list3.add(deletesFromOriginal.get(a).toString());
-    		}
-    		
-    		System.out.println("New file has deletions. Deletions are:");  		
-    		
-    		
-    		for(int c = 0; c < list3.size(); c++){
-    			System.out.println((list3.get(c)).substring(list3.get(c).indexOf('l')));
-    			System.out.println();
-    		}
-    		
-    		System.out.println();
-        }
- 
-            
+       
             
             
           catch (IOException ioe) {
             fail("Error running test shouldGetDeletesBetweenFiles " + ioe.toString());
-        }
+          }
     }
 }
