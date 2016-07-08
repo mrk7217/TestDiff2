@@ -37,6 +37,8 @@ public class FileCompTest {
         }
  
     }
+    //hahaha
+    
     
     /*@Test
     public void shouldGetChangesBetweenFiles() {
