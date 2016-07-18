@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class POMFile {
@@ -22,7 +23,7 @@ public class POMFile {
 		String pomContent = pom.readFirstPOMPageToString();
 		String goodURL = pom.findURL(pomContent);
 		String contentOfWebpage = pom.webpage(goodURL);
-		pom.printLicense(contentOfWebpage, goodURL);
+		pom.printLicense(contentOfWebpage);
 	}
 	
 	
@@ -68,45 +69,24 @@ public class POMFile {
         }
         in.close();
 
-        return webpageWithLicense;
+        return webpageWithLicense.toLowerCase();
 	}
 	
 	
-    public void printLicense(String a, String b){
-		if(a.contains(" MPL ")){
-        	System.out.println("MPL 2.0 or EPL 1.0");
-        }
-        
-        if((a.contains(" Apache ") && !a.contains(" MIT ")) || b.contains("appengine") || b.contains("webtoolkit")){
-        	System.out.println("Apache 2.0");
-        }
-        
-        if(a.contains(" BSD ") && !a.contains(" Apache ")){
-        	System.out.println("BSD License: unknown if BSD-2-Clause or BSD-3-Clause");
-        }
-        
-        if(a.contains(" MIT ")){
-        	System.out.println("MIT");
-        }
-        
-        if(a.contains(" Jython ")){
-        	System.out.println("Python 2.0");
-        }
-        
-        if(a.contains("ECL-2.0")){
-        	System.out.println("ECL 2.0");
-        }
-        
-        if(b.contains("postgresql")){
-        	System.out.println("PostgreSQL");
-        }
-        
-        if(b == ""){
-        	System.out.println("LGPL 3.0");
-        }
-        
-        if(a.contains("Christian Schulte")){
-        	System.out.println("BSD-2-Clause");
-        }
+    public void printLicense(String a) throws FileNotFoundException{
+    	File licenses = new File ("/Users/maramuslea/git/TestDiff2/files/approvedLicenses");
+		ArrayList<String> licensesInArray = new ArrayList<String>();
+		Scanner forLicenses = new Scanner(licenses);
+		
+		while(forLicenses.hasNextLine()){
+			licensesInArray.add(" " + forLicenses.nextLine().toLowerCase() + " ");	
+		}
+		forLicenses.close();
+		
+		for(int i = 0; i < licensesInArray.size(); i++){
+			if(a.contains(licensesInArray.get(i))){
+				System.out.println(licensesInArray.get(i));
+			}
+		}
 	}
 }
