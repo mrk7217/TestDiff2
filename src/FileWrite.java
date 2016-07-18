@@ -21,7 +21,7 @@ public class FileWrite {
 			String sheet = sheetLoc + sheetName + sheetExt;
 			CSVWriter writer = new CSVWriter(new FileWriter(sheet), '\t');
 			for(int i = 0; i < entries.length; i ++){
-				writer.writeNext(entries[i],false);
+				writer.writeNext(entries[i],false); //not an issue with writing into the 2d array
 			}
 			writer.close();
 		} catch (IOException e) {

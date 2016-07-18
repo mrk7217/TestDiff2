@@ -1,10 +1,5 @@
 import org.junit.Test;
 
-//bug as of 7/8 - when spreadsheet fed in with two filled updated licenses at end, reformats sheet and doesnt fill updated license column
-//problem starts between line 48 and 59
-//or could be something with the reached end because the two next to eachother are at the end (look at moreTest.csv for og file)
-
-
 public class UpdateLicense {
 	private final String csvFilename = "/Users/margaretknoblock/Desktop/moreTest.csv";
 	FileRead fileReader = new FileRead();
@@ -24,7 +19,7 @@ public class UpdateLicense {
 		init();
 		checkSameLicense();
 		fileReader.closeFile();//should put at reached end once done testing
-		//writeLicense();
+		writeLicense();
 	}
 	
 	public void checkSameLicense(){
@@ -65,7 +60,7 @@ public class UpdateLicense {
 		updatedSheetInfo = new String[fileReader.numRows()][fileReader.numCols()];
 		currentLicense = fileReader.accessFile(currentRow, updatedLicenseCol); //need to test 
 		addRow(fileReader.getRow(0),0); //adds title row to new spreadsheet
-		addRow(fileReader.getRow(1),1); //adds first row to new spreadsheet
+		addRow(fileReader.getRow(1),1); //adds first row to new spreadsheet (assuming first url already has a license)
 	}
 	
 	public void addRow(String[] row, int loc){ //if no license change
@@ -75,8 +70,17 @@ public class UpdateLicense {
 	
 	public void addRowNewLice(String[] row){ //if the license changes
 		for(int i=0;i<updatedSheetInfo[0].length;i++)
-			updatedSheetInfo[currentRow+1][i] = row[i];
+			updatedSheetInfo[currentRow+1][i] = checkCommas(row[i]);
 		updatedSheetInfo[currentRow+1][updatedLicenseCol] = currentLicense;
+	}
+	
+	public String checkCommas(String info){
+		String newInfo = "";
+		for(int i =0; i < info.length(); i++){
+			if (info.charAt(i) != ',')
+				newInfo += info.charAt(i);
+		}
+		return newInfo;
 	}
 	
 	public void writeLicense(){
