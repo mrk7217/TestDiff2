@@ -5,7 +5,7 @@ eid	groupid	artifactid	version	releasedate	license	licenseDetailed	license_url	s
 1530	cglib	cglib-nodep	3.1	12/9/2013 13:01:00	Other	ASF 2.0	https://repo1.maven.org/maven2/cglib/cglib-nodep/3.1/cglib-nodep-3.1.pom	mvn	Apache-2.0	
 1530	cglib	cglib	2.2.2	5/10/2011 13:54:00	Other	ASF 2.0	https://repo1.maven.org/maven2/cglib/cglib/2.2.2/cglib-2.2.2.pom	mvn	Apache-2.0	
 1530	cglib	cglib	2.2	10/28/2008 2:01:00	Other	ASF 2.0	https://repo1.maven.org/maven2/cglib/cglib/2.2/cglib-2.2.pom	mvn	Apache-2.0	
-1530	cglib	cglib	3	3/31/2013 16:46:00	Other	ASF 2.0	https://repo1.maven.org/maven2/cglib/cglib/3.0/cglib-3.0.pom	mvn	Apache-2.0	
+1530	cglib	cglib	3	3/31/2013 16:46:00	Other	ASF 2.0	https://repo1.maven.org/maven2/cglib/cglib/3.0/cglib-3.0.	mvn		
 1530	cglib	cglib	3.1	12/9/2013 13:00:00	Other	ASF 2.0	https://repo1.maven.org/maven2/cglib/cglib/3.1/cglib-3.1.pom	mvn	Apache-2.0	
 17557	com.h2database	h2	1.0.20061217	12/22/2006 0:14:00	Other	The H2 License, Version 1.0	https://repo1.maven.org/maven2/com/h2database/h2/1.0.20061217/h2-1.0.20061217.pom	mvn	MPL-2.0 or EPL-1.0	
 17557	com.h2database	h2	1.0.20070304	3/12/2007 22:54:00	Other	The H2 License Version 1.0	https://repo1.maven.org/maven2/com/h2database/h2/1.0.20070304/h2-1.0.20070304.pom	mvn	MPL-2.0 or EPL-1.0	

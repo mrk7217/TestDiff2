@@ -1,21 +1,17 @@
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
-import org.junit.Test;
-
 import com.opencsv.CSVReader;
 
-public class FileRead { //for spreadsheet with other licenses
+public class FileRead { //reads in information from spreadsheet with all other license information
 	List<String[]> fullFile;
 	String[] tempRow = null;
 	int numRows;
 	int numCols;
 	CSVReader csvReader;
 	
-	public void openFile(String csvFilename){
+	public void openFile(String csvFilename){ //opens the spreadsheet
 		try{
 			FileReader read = new FileReader(csvFilename); 
 			CSVReader csvReader = new CSVReader(read);
@@ -28,20 +24,29 @@ public class FileRead { //for spreadsheet with other licenses
 		}
 	}
 	
-	public String accessFile(int row, int col){
+	public String accessFile(int row, int col){ //returns desired cell in spreadsheet
 		String info = new String();
 		tempRow = getRow(row);
-		info = tempRow[col]; //access only the desired column
-		
+		info = tempRow[col]; 
 		return info;
 	}
 	
-	public String[] getRow(int row){
+	public String[] getRow(int row){ //returns desired row from spreadsheet as string array
 		String[] currentRow = (String[]) fullFile.get(row);
 		return currentRow;
 	}
 	
-	public void closeFile(){
+	public int numCols(){ //returns number of columns from file
+		numCols = fullFile.get(0).length;
+		return numCols;
+	}
+	
+	public int numRows(){ //returns number of rows from file
+		numRows = fullFile.size();
+		return numRows;
+	}
+	
+	public void closeFile(){ //closes file
 		try {
 			csvReader.close();
 			System.out.println("file closed");
@@ -49,15 +54,5 @@ public class FileRead { //for spreadsheet with other licenses
 		catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public int numCols(){
-		numCols = fullFile.get(0).length;
-		return numCols;
-	}
-	
-	public int numRows(){
-		numRows = fullFile.size();
-		return numRows; //only gets the size of a null fullFile, need to fix this
 	}
 }
