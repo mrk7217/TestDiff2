@@ -5,7 +5,7 @@ import java.io.File;
 //to run through a csv sheet and update the licenses by comparing url 
 //and file contents as well as user input when the system can not self-determine the updated license
 public class UpdateLicense { 
-	private final String csvFilename = "/Users/margaretknoblock/Downloads/otherLic.csv"; //csv file to read in
+	private final String csvFilename = "/Users/margaretknoblock/Desktop/moreTest.csv"; //csv file to read in
 	FileRead fileReader = new FileRead();
 	FileWrite fileWriter = new FileWrite();
 	WGet fileGetter = new WGet();
@@ -26,7 +26,7 @@ public class UpdateLicense {
 		checkSameLicense();
 		
 		fileReader.closeFile(); //should put at reached end once done testing
-		//writeLicense(); //writes to new spreadsheet
+		writeLicense(); //writes to new spreadsheet
 	}
 	
 	public void checkSameLicense(){ //checks to see if the two rows have the same license
@@ -67,6 +67,8 @@ public class UpdateLicense {
 				}
 			}
 			else{ //if second url already has a license, moves to next one
+				//System.out.println((currentRow+1) + " " + (currentRow+2));
+				System.out.println("Not empty");
 				addRow(currentRow+1); //add the second row without changing the license
 				currentLicense = fileReader.accessFile(currentRow+1, updatedLicenseCol); //changes current license to what is ther
 			}
@@ -94,6 +96,7 @@ public class UpdateLicense {
 	}
 	
 	public void addRowNewLice(int rowNum){ //if the license changes
+		System.out.println((currentRow+1) + " " + (currentRow+2));
 		String [] row = fileReader.getRow(rowNum); //gets row from file 
 		for(int i=0;i<updatedSheetInfo[0].length;i++) //adds all elements of row to updated sheet info
 			updatedSheetInfo[currentRow+1][i] = checkCommas(row[i]);
