@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-public class FileCompTest { //FIX WEIRD RETURN THING
+public class FileCompTest {
 	private final File original = new File("/Users/mikaylaminton/Documents/originalFile.txt"); //pulls original text file
 	 
     private final File revised = new File("/Users/mikaylaminton/Documents/revisedFile.txt"); //pulls revised text file
@@ -27,10 +27,6 @@ public class FileCompTest { //FIX WEIRD RETURN THING
         try {
         	
         	final List<Delta> deltasFromOriginal = comparator.getDeltas();
-        	//for(int i=0;i<deltasFromOriginal.size();i++){
-        		//System.out.println(deltasFromOriginal.get(i));
-        		//System.out.println();
-        	//}
         	
         	ArrayList <String> list = new ArrayList<String>();
         	int sum = 0;
@@ -45,11 +41,7 @@ public class FileCompTest { //FIX WEIRD RETURN THING
     			System.out.println("These licenses are the same."); //no changes, insertions, or deletions = licenses are the same
     		}
     		
-    		else if(deltasFromOriginal.size() >= 10){ //NEED TO FIX
-    			System.out.println("These licenses are different.");
-    		}
-    		
-    		else if(deltasFromOriginal.size() > 0){
+    		if(deltasFromOriginal.size() > 0){
     			for(int e = 0; e < list.size(); e++){
     				if(list.get(e).charAt(1) == 'C'){ //finds changes within all of the deltas
     					changes = true;
@@ -58,34 +50,73 @@ public class FileCompTest { //FIX WEIRD RETURN THING
     			if(changes == true){
     				System.out.println("NEW FILE HAS CHANGES. CHANGES ARE:"); //find way to shorten this
     				//System.out.println(list);
+    				
+    				String a = "";
+    				String b = "";
+    				String d = "";
+    				String e = "";
     					for(int c = 0; c < list.size(); c++){
     						if(list.get(c).charAt(1) == 'C'){
-    							String a = ((list.get(c)).substring((list.get(c).indexOf("lines")), list.get(c).lastIndexOf(']')));
-    							String b = (a.substring(a.indexOf('['), a.indexOf("] to [") + 1)); 
-    							String d = (a.substring(a.indexOf("] to ["), a.lastIndexOf(']') + 1));
-    							String e = (d.substring(d.indexOf('[')));
-    							System.out.print("Original: ");											
-							    System.out.println(b);
-							   	System.out.print("Revised:  ");
-							   	System.out.println(e);
-								System.out.println();
-								
+    							a = ((list.get(c)).substring((list.get(c).indexOf("lines")), list.get(c).lastIndexOf(']')));
+    							b = (a.substring(a.indexOf('['), a.indexOf("] to [") + 1)); 
+    							d = (a.substring(a.indexOf("] to ["), a.lastIndexOf(']') + 1));
+    							e = (d.substring(d.indexOf('[')));
+    							
     							if(b.contains(",")){
     								String [] splitByCommasRv = d.split(",");
-    								
     									
     								for(int m = 0; m < splitByCommasRv.length; m++){ //sum for # of changes
     									sum++;
     								}
     							}
+    							else{
+    								sum++;
+    							}
     						}
     					}
+    							
+    							
+    							boolean different = false;
+    							if(sum >= 5){
+    				    			different = true;
+    				    		}
+    				    		    				    		
+    				    		if(sum > 0 && sum < 5){
+    				    			System.out.print("Original: ");											
+    								System.out.println(b);
+    								System.out.print("Revised:  ");
+    								System.out.println(e);
+    								System.out.println();
+    							
+    								Scanner in = new Scanner(System.in);
+    				    			//System.out.println("Are these licenses the same?");
+    				    			String f = in.nextLine();
+    				    			if(f.equalsIgnoreCase("Yes")){
+    				    				System.out.println("These licenses are the same.");
+    				    			}
+    				    			else if(f.equalsIgnoreCase("No")){
+    				    				System.out.println("These licenses are different.");
+    				    			}
+    				    		}
     			}
     		}
+        }
+    
+    		
+    	catch (IOException ioe) {
+    		            fail("Error running test shouldGetDeletesBetweenFiles " + ioe.toString());
+    	}
+    }
+}
+    				    		
+    						
+    					
     			
-    		System.out.println();
+    		
+    			
+    		//System.out.println();
 
-    		boolean deletions = false;
+    		/*boolean deletions = false;
     		
     		if(deltasFromOriginal.size() > 0){
     			for(int e = 0; e < list.size(); e++){
@@ -105,6 +136,17 @@ public class FileCompTest { //FIX WEIRD RETURN THING
     							System.out.print("Revised:  []"); //because it was deleted
     							//System.out.println(d);
     							System.out.println();
+    							
+    							if(b.contains(",")){
+    								String [] splitByCommasRv = b.split(",");
+    									
+    								for(int m = 0; m < splitByCommasRv.length; m++){ //sum for # of changes
+    									sum++;
+    								}
+    							}
+    							else{
+    								sum++;
+    							}
     						}
     					}
     			}
@@ -133,30 +175,23 @@ public class FileCompTest { //FIX WEIRD RETURN THING
     							System.out.print("Revised:  ");
     							System.out.println(b);
     							System.out.println();
+    							
+    							if(b.contains(",")){
+    								String [] splitByCommasRv = b.split(",");
+    									
+    								for(int m = 0; m < splitByCommasRv.length; m++){ //sum for # of changes
+    									sum++;
+    								}
+    							}
+    							else{
+    								sum++;
+    							}
     						}
     					}
     			}
     		}
+    		*/
     		
-    		System.out.println();
+    		//System.out.println();
+    		//System.out.println(sum);
     		
-    		Scanner a = new Scanner(System.in);
-    		
-    		if(deltasFromOriginal.size() > 0 && deltasFromOriginal.size() < 10){
-    			System.out.println("Are these licenses the same?");
-    			String b = a.nextLine();
-    			if(b.equalsIgnoreCase("Yes")){
-    				System.out.println("These licenses are the same.");
-    			}
-    			else if(b.equalsIgnoreCase("No")){
-    				System.out.println("These licenses are different.");
-    			}
-    		}
-        }
-    		
-            
-          catch (IOException ioe) {
-            fail("Error running test shouldGetDeletesBetweenFiles " + ioe.toString());
-          }
-    }
-}
