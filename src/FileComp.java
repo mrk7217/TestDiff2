@@ -19,6 +19,7 @@ public class FileComp {
         this.original = original;
         this.revised = revised;
     }
+    
  
     public List<Chunk> getAllDiffs() throws IOException {
     	final List<Chunk> listOfDiffs = new ArrayList<Chunk>();
@@ -70,8 +71,6 @@ public class FileComp {
         while ((line = in.readLine()) != null) {
             lines.add(line);
         }
- 
         return lines;
     }
- 
 }
