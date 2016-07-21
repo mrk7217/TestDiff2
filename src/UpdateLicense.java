@@ -5,7 +5,8 @@ import java.io.File;
 //to run through a csv sheet and update the licenses by comparing url 
 //and file contents as well as user input when the system can not self-determine the updated license
 public class UpdateLicense { 
-	private final String csvFilename = "/Users/margaretknoblock/Desktop/moreTest.csv"; //csv file to read in
+	private final String csvFilename = "/Users/margaretknoblock/Desktop/integrationTest.csv"; //csv file to read in
+	FileCompTest fileTester = new FileCompTest();
 	FileRead fileReader = new FileRead();
 	FileWrite fileWriter = new FileWrite();
 	WGet fileGetter = new WGet();
@@ -53,15 +54,20 @@ public class UpdateLicense {
 						//System.out.println(currentRow);
 						addRow(currentRow+1); //delete after actually adding in wget
 						
-						//String file1 = getFile(currentRow); //creates file and saves full path name as a string
-						//String file2 = getFile(currentRow + 1);
-						/*if (true){ //fileComp(file1, file2)
-						addRowNewLice(currentRow+1);
-						}
-						else{
-						addRow(currentRow+1);
-						}*/
-						//need to do wget and file comparison
+						
+						//**UNCOMMENT SECTION BELOW
+						/*String file1Name = getFile(currentRow); //creates file and saves full path name as a string
+						String file2Name = getFile(currentRow + 1);
+						File fileOne = new File(file1Name);
+						File fileTwo = new File(file2Name);
+						
+						if (fileTester.shouldGetChangesBetweenFiles(fileOne, fileTwo))
+							addRowNewLice(currentRow+1);
+						
+						else
+							addRow(currentRow+1);*/
+						
+						
 						//if mik's code sets a different updated license, should change current license
 					}	
 				}
