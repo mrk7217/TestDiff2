@@ -45,8 +45,16 @@ public class FileCompTest {
  
     }*/
     
+    @Test
+    public void test(){ //currently testing with files on my computer WITHOUT update license
+    	if(shouldGetChangesBetweenFiles())
+    		System.out.println("Same license");
+    	else
+    		System.out.println("Different licenses");
+    }
+    
     //@Test //**REMOVE @TEST
-    public void shouldGetChangesBetweenFiles(){ //**ADD PARAMETERS FOR ORIGINAL AND REVISED FILES (File original, File revised)
+    public boolean shouldGetChangesBetweenFiles(){ //** //**ADD PARAMETERS FOR ORIGINAL AND REVISED FILES (File original, File revised)
     	//** NEED TO CHANGE METHOD TYPE TO BOOLEAN AND ADD RETURN STATEMENTS
     	final FileComp comparator = new FileComp(original, revised);
 
@@ -55,56 +63,40 @@ public class FileCompTest {
     		final List<Delta> deltasFromOriginal = comparator.getDeltas();
 
     		ArrayList <String> list = new ArrayList<String>();
+    		ArrayList <String> changesList = new ArrayList<String>();
     		int sum = 0;
-
-    		for(int a = 0; a < deltasFromOriginal.size(); a++){	//adds deltas from original into an array (to string)
-    			list.add((deltasFromOriginal.get(a)).toString());
-    		}
-
-    		boolean changes = false; 
 
     		if(deltasFromOriginal.size() == 0){ //not the array
     			System.out.println("These licenses are the same."); //no changes, insertions, or deletions = licenses are the same
+    			return true;
     		}
     		else{
-    			for(int e = 0; e < list.size(); e++){
-    				if(list.get(e).charAt(1) == 'C'){ //finds changes within all of the deltas
-    					changes = true;
-    				}
-    			}
-    			if(changes == true){
+    			String temp;
+    			for(int a = 0; a < deltasFromOriginal.size(); a++){	//adds deltas from original into an array (to string)
+        			temp =(deltasFromOriginal.get(a)).toString();
+        			if(temp.charAt(1) == 'C')//finds changes within all of the deltas
+        				changesList.add(temp);
+        		}
+    		
+    			if(changesList.size()!=0){
     				System.out.println("NEW FILE HAS CHANGES. CHANGES ARE:"); //find way to shorten this
-    				//System.out.println(list);
+    				String a,b = new String(),d,e = new String();
+    				for(int c = 0; c < changesList.size(); c++){
+    					a = ((changesList.get(c)).substring((changesList.get(c).indexOf("lines")), changesList.get(c).lastIndexOf(']')));
+    					b = (a.substring(a.indexOf('['), a.indexOf("] to [") + 1)); 
+    					d = (a.substring(a.indexOf("] to ["), a.lastIndexOf(']') + 1));
+    					e = (d.substring(d.indexOf('[')));
 
-    				String a = "";
-    				String b = "";
-    				String d = "";
-    				String e = "";
-    				for(int c = 0; c < list.size(); c++){
-    					if(list.get(c).charAt(1) == 'C'){
-    						a = ((list.get(c)).substring((list.get(c).indexOf("lines")), list.get(c).lastIndexOf(']')));
-    						b = (a.substring(a.indexOf('['), a.indexOf("] to [") + 1)); 
-    						d = (a.substring(a.indexOf("] to ["), a.lastIndexOf(']') + 1));
-    						e = (d.substring(d.indexOf('[')));
-
-    						if(b.contains(",")){
-    							String [] splitByCommasRv = d.split(",");
-    							for(int m = 0; m < splitByCommasRv.length; m++)//sum for # of changes
-    								sum++;
-    						}
-    						else{
-    							sum++;
-    						}
+    					if(b.contains(",")){
+    						String [] splitByCommasRv = d.split(",");
+    						sum += splitByCommasRv.length;//sum for # of changes
+    					}
+    					else{
+    						sum++;
     					}
     				}
 
-    				boolean different = false;
-    				if(sum >= 5){
-    					System.out.println("this");
-    					different = true;
-    				}
-
-    				if(sum > 0 && sum < 5){
+    				if(sum < 5){
     					System.out.print("Original: ");											
     					System.out.println(b);
     					System.out.print("Revised:  ");
@@ -116,24 +108,32 @@ public class FileCompTest {
     					String f = in.nextLine();
     					if(f.equalsIgnoreCase("Yes")){
     						System.out.println("These licenses are the same.");
+    						return true; //**
     					}
     					else if(f.equalsIgnoreCase("No")){
     						System.out.println("These licenses are different.");
- 
+    						return false; //**
     					}
     					else { //need a better way to deal with invalid input
     						System.out.println("Invalid Input. Assuming licenses are different");
+    						return false;
     					}
+    				}
+    				else{
+    					return false;
     				}
     			}
     		}
+    		return false;
     	}
 
         catch (IOException ioe) {
-        	fail("Error running test shouldGetDeletesBetweenFiles " + ioe.toString());
+        	fail("Error running test shouldGetChangesBetweenFiles " + ioe.toString());
+        	return false;
         }
     }
 }
+
 //System.out.println();
 
 /*boolean deletions = false;
@@ -214,10 +214,3 @@ if(deltasFromOriginal.size() > 0){
 
 //System.out.println();
 //System.out.println(sum);
-    				    		
-    						
-    					
-    			
-    		
-    			
-    		

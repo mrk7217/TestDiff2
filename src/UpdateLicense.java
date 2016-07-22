@@ -56,12 +56,12 @@ public class UpdateLicense {
 						
 						
 						//**UNCOMMENT SECTION BELOW
-						/*String file1Name = getFile(currentRow); //creates file and saves full path name as a string
+						String file1Name = getFile(currentRow); //creates file and saves full path name as a string
 						String file2Name = getFile(currentRow + 1);
 						File fileOne = new File(file1Name);
 						File fileTwo = new File(file2Name);
 						
-						if (fileTester.shouldGetChangesBetweenFiles(fileOne, fileTwo))
+						/*if (fileTester.shouldGetChangesBetweenFiles(fileOne, fileTwo))
 							addRowNewLice(currentRow+1);
 						
 						else
