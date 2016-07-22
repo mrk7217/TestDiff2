@@ -98,8 +98,7 @@ public class FileCompTest {
     					
     					
     				}
-    				//System.out.println(originalList);
-    				//System.out.println(revisedList);
+
     				
     				if(sum < 5){
     					System.out.println("NEW FILE HAS CHANGES. CHANGES ARE:"); //find way to shorten this
