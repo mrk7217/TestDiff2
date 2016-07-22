@@ -1,0 +1,15 @@
+<?xml version="1.0"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>opensymphony</groupId>
+  <artifactId>oscache</artifactId>
+  <name></name>
+  <version>2.3</version>
+  <description>OSCache is a caching solution that includes a JSP tag library and set of classes to perform fine grained dynamic caching of JSP content, servlet responses or arbitrary objects.</description>
+  <url>http://www.opensymphony.com/oscache/</url>
+  <licenses>
+    <license>
+      <name>The OpenSymphony Software License</name>
+      <url>http://www.opensymphony.com/oscache/license.action</url>
+    </license>
+  </licenses>
+</project>

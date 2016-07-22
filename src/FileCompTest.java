@@ -1,6 +1,4 @@
 import difflib.Delta;
-
-import org.junit.Test;
 import java.util.Scanner;
 
 import java.io.File;
@@ -12,34 +10,14 @@ import static org.junit.Assert.fail;
 public class FileCompTest {
 	Scanner in;
 	Scanner in2;
-	
-	//**NEED TO DELETE THESE TWO FILE CREATION LINES
-	private final File original = new File("/Users/margaretknoblock/Documents/Summer2016/originalFile.txt");
 
-    private final File revised = new File("/Users/margaretknoblock/Documents/Summer2016/revisedFile.txt");
-    
-
-	//private final File original = new File("/Users/mikaylaminton/Documents/originalFile.txt"); //pulls original text file
-	 
-    //private final File revised = new File("/Users/mikaylaminton/Documents/revisedFile.txt"); //pulls revised text file
-    
-    @Test
-    public void test(){ //currently testing with files on my computer WITHOUT update license
-    	if(shouldGetChangesBetweenFiles())
-    		System.out.println("Same license");
-    	else
-    		System.out.println("Different licenses");
-    }
-    
     public void closeScanners(){
     	in.close();
     	in2.close();
     }
     
-    public boolean shouldGetChangesBetweenFiles(){ //** //**ADD PARAMETERS FOR ORIGINAL AND REVISED FILES (File original, File revised)
-    	//** NEED TO CHANGE METHOD TYPE TO BOOLEAN AND ADD RETURN STATEMENTS
+    public boolean shouldGetChangesBetweenFiles(File original, File revised){ 
     	final FileComp comparator = new FileComp(original, revised);
-
     	try {
     		final List<Delta> deltasFromOriginal = comparator.getDeltas();
     		ArrayList <String> changesList = new ArrayList<String>();
@@ -117,8 +95,10 @@ public class FileCompTest {
     					return false;
     				}
     			}
+    			else{
+    				return true;
+    			}
     		}
-   
     		return false;
     	}
 

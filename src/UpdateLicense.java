@@ -5,7 +5,7 @@ import java.io.File;
 //to run through a csv sheet and update the licenses by comparing url 
 //and file contents as well as user input when the system can not self-determine the updated license
 public class UpdateLicense { 
-	private final String csvFilename = "/Users/margaretknoblock/Desktop/integrationTest.csv"; //csv file to read in
+	private final String csvFilename = "/Users/margaretknoblock/Downloads/otherLicenses.csv"; //csv file to read in
 	FileCompTest fileTester = new FileCompTest();
 	FileRead fileReader = new FileRead();
 	FileWrite fileWriter = new FileWrite();
@@ -48,24 +48,19 @@ public class UpdateLicense {
 						addRowNewLice(currentRow+1); //if same license detailed adds row with the new license
 					}
 					else{ //need to open files to compare
-						System.out.println((currentRow+1) + " " + (currentRow+2));
-						System.out.println("Not same url or same detailed");
-						//System.out.println(fileReader.accessFile(currentRow, licenseDetailedCol));
-						//System.out.println(currentRow);
-						addRow(currentRow+1); //delete after actually adding in wget
+						//System.out.println((currentRow+1) + " " + (currentRow+2));
+						//System.out.println("Not same url or same detailed");
 						
-						
-						//**UNCOMMENT SECTION BELOW
 						String file1Name = getFile(currentRow); //creates file and saves full path name as a string
 						String file2Name = getFile(currentRow + 1);
 						File fileOne = new File(file1Name);
 						File fileTwo = new File(file2Name);
 						
-						/*if (fileTester.shouldGetChangesBetweenFiles(fileOne, fileTwo))
-							addRowNewLice(currentRow+1);
-						
-						else
-							addRow(currentRow+1);*/
+						if (fileTester.shouldGetChangesBetweenFiles(fileOne, fileTwo)){
+							addRowNewLice(currentRow+1);}
+						else{
+							System.out.println("Row " + (currentRow+2) + " does not have an autofilled license. Please fill manually.");
+							addRow(currentRow+1);}
 						
 						
 						//if mik's code sets a different updated license, should change current license
@@ -73,8 +68,6 @@ public class UpdateLicense {
 				}
 			}
 			else{ //if second url already has a license, moves to next one
-				//System.out.println((currentRow+1) + " " + (currentRow+2));
-				System.out.println("Not empty");
 				addRow(currentRow+1); //add the second row without changing the license
 				currentLicense = fileReader.accessFile(currentRow+1, updatedLicenseCol); //changes current license to what is ther
 			}
@@ -102,7 +95,6 @@ public class UpdateLicense {
 	}
 	
 	public void addRowNewLice(int rowNum){ //if the license changes
-		System.out.println((currentRow+1) + " " + (currentRow+2));
 		String [] row = fileReader.getRow(rowNum); //gets row from file 
 		for(int i=0;i<updatedSheetInfo[0].length;i++) //adds all elements of row to updated sheet info
 			updatedSheetInfo[currentRow+1][i] = checkCommas(row[i]);
