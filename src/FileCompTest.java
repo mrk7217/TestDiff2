@@ -67,8 +67,7 @@ public class FileCompTest {
     		int sum = 0;
 
     		if(deltasFromOriginal.size() == 0){ //not the array
-    			System.out.println("These licenses are the same."); //no changes, insertions, or deletions = licenses are the same
-    			return true;
+    			return true; //no changes, insertions, or deletions = licenses are the same
     		}
     		else{
     			String temp;
@@ -80,7 +79,6 @@ public class FileCompTest {
     			ArrayList <String> originalList = new ArrayList<String>();
     			ArrayList <String> revisedList = new ArrayList<String>();
     			if(changesList.size()!=0){
-    				System.out.println("NEW FILE HAS CHANGES. CHANGES ARE:"); //find way to shorten this
     				String a,b = new String(),d,e = new String();
     				for(int c = 0; c < changesList.size(); c++){
     					a = ((changesList.get(c)).substring((changesList.get(c).indexOf("lines")), changesList.get(c).lastIndexOf(']')));
@@ -98,9 +96,13 @@ public class FileCompTest {
     					originalList.add(b);
     					revisedList.add(e);
     					
+    					
     				}
+    				//System.out.println(originalList);
+    				//System.out.println(revisedList);
     				
     				if(sum < 5){
+    					System.out.println("NEW FILE HAS CHANGES. CHANGES ARE:"); //find way to shorten this
     					System.out.print("Original: ");											
     					System.out.println(originalList);
     					System.out.print("Revised:  ");
@@ -123,7 +125,7 @@ public class FileCompTest {
     						while(!f.equalsIgnoreCase("Yes") || !f.equalsIgnoreCase("No")){
     							System.out.println("Are these licenses the same?");
     							Scanner in2 = new Scanner(System.in);
-    							String g = in.nextLine();
+    							String g = in2.nextLine();
     	    					if(g.equalsIgnoreCase("Yes")){
     	    						return true; //**
     	    					}
@@ -151,84 +153,3 @@ public class FileCompTest {
         }
     }
 }
-
-//System.out.println();
-
-/*boolean deletions = false;
-
-if(deltasFromOriginal.size() > 0){
-	for(int e = 0; e < list.size(); e++){
-		if(list.get(e).charAt(1) == 'D'){
-			deletions = true;
-		}
-	}
-	if(deletions == true){
-		System.out.println("NEW FILE HAS DELETIONS. DELETIONS ARE:");
-			for(int c = 0; c < list.size(); c++){
-				if(list.get(c).charAt(1) == 'D'){
-					String a = ((list.get(c)).substring((list.get(c).indexOf("lines")), list.get(c).lastIndexOf(']')));
-					String b = (a.substring(a.indexOf('['), a.indexOf(']') + 1));
-					//String d = (a.substring(a.lastIndexOf('['), a.lastIndexOf(']') + 1)); 
-					System.out.print("Original: ");											
-					System.out.println(b);
-					System.out.print("Revised:  []"); //because it was deleted
-					//System.out.println(d);
-					System.out.println();
-					
-					if(b.contains(",")){
-						String [] splitByCommasRv = b.split(",");
-							
-						for(int m = 0; m < splitByCommasRv.length; m++){ //sum for # of changes
-							sum++;
-						}
-					}
-					else{
-						sum++;
-					}
-				}
-			}
-	}
-}
-
-System.out.println();
-
-boolean insertions = false;
-
-if(deltasFromOriginal.size() > 0){
-	for(int e = 0; e < list.size(); e++){
-		if(list.get(e).charAt(1) == 'I'){
-			insertions = true;
-		}
-	}
-	if(insertions == true){
-		System.out.println("NEW FILE HAS INSERTIONS. INSERTIONS ARE:");
-		//System.out.println(list);
-			for(int c = 0; c < list.size(); c++){
-				if(list.get(c).charAt(1) == 'I'){
-					String a = ((list.get(c)).substring((list.get(c).indexOf("lines")), list.get(c).lastIndexOf(']')));
-					String b = (a.substring(a.indexOf('['), a.indexOf(']') + 1));
-					//String d = (a.substring(a.lastIndexOf('['), a.lastIndexOf(']') + 1)); 
-					System.out.println("Original: []");										
-					//System.out.println(b);
-					System.out.print("Revised:  ");
-					System.out.println(b);
-					System.out.println();
-					
-					if(b.contains(",")){
-						String [] splitByCommasRv = b.split(",");
-							
-						for(int m = 0; m < splitByCommasRv.length; m++){ //sum for # of changes
-							sum++;
-						}
-					}
-					else{
-						sum++;
-					}
-				}
-			}
-	}
-}
-*/
-
-//System.out.println();
-//System.out.println(sum);
