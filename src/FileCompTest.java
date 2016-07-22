@@ -16,14 +16,14 @@ import static org.junit.Assert.fail;
 
 public class FileCompTest {
 	//**NEED TO DELETE THESE TWO FILE CREATION LINES
-	private final File original = new File("/Users/margaretknoblock/Documents/Summer2016/originalFile.txt");
+	//private final File original = new File("/Users/margaretknoblock/Documents/Summer2016/originalFile.txt");
 
-    private final File revised = new File("/Users/margaretknoblock/Documents/Summer2016/revisedFile.txt");
+    //private final File revised = new File("/Users/margaretknoblock/Documents/Summer2016/revisedFile.txt");
     
 
-	//private final File original = new File("/Users/mikaylaminton/Documents/originalFile.txt"); //pulls original text file
+	private final File original = new File("/Users/mikaylaminton/Documents/originalFile.txt"); //pulls original text file
 	 
-    //private final File revised = new File("/Users/mikaylaminton/Documents/revisedFile.txt"); //pulls revised text file
+    private final File revised = new File("/Users/mikaylaminton/Documents/revisedFile.txt"); //pulls revised text file
  
    /* @Test
     public void getAllDiffsBetweenFiles(){
@@ -77,7 +77,8 @@ public class FileCompTest {
         			if(temp.charAt(1) == 'C')//finds changes within all of the deltas
         				changesList.add(temp);
         		}
-    		
+    			ArrayList <String> originalList = new ArrayList<String>();
+    			ArrayList <String> revisedList = new ArrayList<String>();
     			if(changesList.size()!=0){
     				System.out.println("NEW FILE HAS CHANGES. CHANGES ARE:"); //find way to shorten this
     				String a,b = new String(),d,e = new String();
@@ -94,27 +95,44 @@ public class FileCompTest {
     					else{
     						sum++;
     					}
+    					originalList.add(b);
+    					revisedList.add(e);
+    					
     				}
-
+    				
     				if(sum < 5){
     					System.out.print("Original: ");											
-    					System.out.println(b);
+    					System.out.println(originalList);
     					System.out.print("Revised:  ");
-    					System.out.println(e);
+    					System.out.println(revisedList);
     					System.out.println();
 
+
     					Scanner in = new Scanner(System.in);
-    					//System.out.println("Are these licenses the same?");
+    					System.out.println("Are these licenses the same?");
     					String f = in.nextLine();
     					if(f.equalsIgnoreCase("Yes")){
-    						System.out.println("These licenses are the same.");
+    						//System.out.println("These licenses are the same.");
     						return true; //**
     					}
     					else if(f.equalsIgnoreCase("No")){
-    						System.out.println("These licenses are different.");
+    						//System.out.println("These licenses are different.");
     						return false; //**
     					}
-    					else { //need a better way to deal with invalid input
+    					else {
+    						while(!f.equalsIgnoreCase("Yes") || !f.equalsIgnoreCase("No")){
+    							System.out.println("Are these licenses the same?");
+    							Scanner in2 = new Scanner(System.in);
+    							String g = in.nextLine();
+    	    					if(g.equalsIgnoreCase("Yes")){
+    	    						return true; //**
+    	    					}
+    	    					else if(g.equalsIgnoreCase("No")){
+    	    						return false; //**
+    	    					}
+    						}
+    						
+    						//need a better way to deal with invalid input
     						System.out.println("Invalid Input. Assuming licenses are different");
     						return false;
     					}
