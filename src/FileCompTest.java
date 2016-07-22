@@ -46,8 +46,7 @@ public class FileCompTest {
     		int sum = 0;
 
     		if(deltasFromOriginal.size() == 0){ //not the array
-    			System.out.println("These licenses are the same."); //no changes, insertions, or deletions = licenses are the same
-    			return true;
+    			return true; //no changes, insertions, or deletions = licenses are the same
     		}
     		else{
     			String temp;
@@ -76,8 +75,10 @@ public class FileCompTest {
     					originalList.add(b);
     					revisedList.add(e);
     				}
+
     				
     				if(sum < 5){
+
     					System.out.println("NEW FILE HAS CHANGES. CHANGES ARE:");
     					System.out.print("Original: ");											
     					System.out.println(originalList);
