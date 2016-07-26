@@ -55,17 +55,17 @@ public class UpdateLicense {
 						addRow(currentRow+1); //delete after actually adding in wget
 						
 						
-						//**UNCOMMENT SECTION BELOW
+					
 						String file1Name = getFile(currentRow); //creates file and saves full path name as a string
 						String file2Name = getFile(currentRow + 1);
 						File fileOne = new File(file1Name);
 						File fileTwo = new File(file2Name);
 						
-						/*if (fileTester.shouldGetChangesBetweenFiles(fileOne, fileTwo))
+						if (fileTester.shouldGetChangesBetweenFiles(fileOne, fileTwo))
 							addRowNewLice(currentRow+1);
 						
 						else
-							addRow(currentRow+1);*/
+							addRow(currentRow+1);
 						
 						
 						//if mik's code sets a different updated license, should change current license
@@ -76,7 +76,7 @@ public class UpdateLicense {
 				//System.out.println((currentRow+1) + " " + (currentRow+2));
 				System.out.println("Not empty");
 				addRow(currentRow+1); //add the second row without changing the license
-				currentLicense = fileReader.accessFile(currentRow+1, updatedLicenseCol); //changes current license to what is ther
+				currentLicense = fileReader.accessFile(currentRow+1, updatedLicenseCol); //changes current license to what is there
 			}
 		}
 		addRow(fileReader.numRows() -1); //fills in last row with the updated license

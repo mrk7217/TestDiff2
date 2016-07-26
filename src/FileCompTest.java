@@ -25,7 +25,7 @@ public class FileCompTest {
 	 
     private final File revised = new File("/Users/mikaylaminton/Documents/revisedFile.txt"); //pulls revised text file
  
-   /* @Test
+   @Test
     public void getAllDiffsBetweenFiles(){
     	final FileComp comparator = new FileComp(original, revised);
     	try{
@@ -42,19 +42,21 @@ public class FileCompTest {
     	catch (IOException ioe) {
             fail("Error running test shouldGetChangesBetweenFiles " + ioe.toString());
         }
+   }
+    	
+    	
  
-    }*/
     
     @Test
     public void test(){ //currently testing with files on my computer WITHOUT update license
-    	if(shouldGetChangesBetweenFiles())
+    	if(shouldGetChangesBetweenFiles(original, original))
     		System.out.println("Same license");
     	else
     		System.out.println("Different licenses");
     }
     
     //@Test //**REMOVE @TEST
-    public boolean shouldGetChangesBetweenFiles(){ //** //**ADD PARAMETERS FOR ORIGINAL AND REVISED FILES (File original, File revised)
+    public boolean shouldGetChangesBetweenFiles(File original, File revised){ //** //**ADD PARAMETERS FOR ORIGINAL AND REVISED FILES (File original, File revised)
     	//** NEED TO CHANGE METHOD TYPE TO BOOLEAN AND ADD RETURN STATEMENTS
     	final FileComp comparator = new FileComp(original, revised);
 
