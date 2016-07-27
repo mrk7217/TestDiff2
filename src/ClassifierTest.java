@@ -53,7 +53,7 @@ public class ClassifierTest {
 	
 	public void writeLicense(){ //writes everything from 2d array updateSheetInfo into a new csv file
 		fileWriter.writeSpreadsheet(updatedSheetInfo, csvFilename);	
-		System.out.println("writing sheet");
+		System.out.println("writing sheet"); //test test test
 	}
 }
 	
