@@ -51,11 +51,11 @@ public class POMFile {
 		}else {
 			a = "";
 		}
-
+		
 		return a;
 	}
 	
-	public String webpage(String a) throws IOException{	//Opens the URL from the POM file, then reads and saves the contents of the entire webpage.
+	public String webpage(String a) throws IOException{	//Opens the URL from the POM file, then reads and saves the contents of the entire web page.
 		URL theURL = new URL(a);                        
         BufferedReader in = new BufferedReader(new InputStreamReader(theURL.openStream()));
 
@@ -65,11 +65,11 @@ public class POMFile {
             webpageWithLicense += inputLine;
         }
         in.close();
-
+        
         return webpageWithLicense;
 	}
 	
-	public ArrayList<String> prepareLicensesIfFullName() throws FileNotFoundException{
+	public ArrayList<String> prepareLicensesIfFullName() throws FileNotFoundException{ //Puts the file with the licenses (full name) into an ArrayList.
 		File licensesFullName = new File ("/Users/maramuslea/git/TestDiff2/files/approvedLicensesFullName"); //Bring the File into the code.
 		ArrayList<String> licensesInArrayList = new ArrayList<String>(); //Prepare ArrayList to put the licenses with full names into it.
 		Scanner forLicenses = new Scanner(licensesFullName); //Prepare Scanner that is necessary to move the File to the ArrayList.
@@ -82,32 +82,31 @@ public class POMFile {
 		return licensesInArrayList;
 	}
 	
-    public void printLicenseIfFullName(String a, ArrayList<String> b) throws FileNotFoundException{
+    public void printLicenseIfFullName(String a, ArrayList<String> b) throws FileNotFoundException{ //If the web page has any licenses (full name), it will print the license.
     	
-		for(int i = 0; i < b.size(); i++){ //Cross references the ArrayList with the licenses against the contents of the webpage.
+		for(int i = 0; i < b.size(); i++){ //Cross references the ArrayList of licenses against the contents of the web page.
 			if(a.contains(b.get(i))){     
 				System.out.println(b.get(i));
 			}
 		}
 	}
     
-    public ArrayList<String> prepareLicensesIfAcronym() throws FileNotFoundException{
+    public ArrayList<String> prepareLicensesIfAcronym() throws FileNotFoundException{ //Puts the file with the licenses (acronym) into an ArrayList.
     	File licensesAcronym = new File ("/Users/maramuslea/Documents/approvedLicensesAcronym.txt"); //Bring the File into the code.
 		ArrayList<String> licensesInArrayList = new ArrayList<String>(); //Prepare ArrayList to put the licenses with full names into it.
 		Scanner forLicenses = new Scanner(licensesAcronym); //Prepare Scanner that is necessary to move the File to the ArrayList.
 		
-		while(forLicenses.hasNextLine()){ //Input the licenses with full names into the ArrayList. Each index is its own license.
+		while(forLicenses.hasNextLine()){ //Input the licenses (acronym) into the ArrayList. Each index is its own license. Their is a space before and after the acronyms to ensure only true licenses (and not random words) are found.
 			licensesInArrayList.add(" " + forLicenses.nextLine() + " ");	
 		}
 		forLicenses.close();
 		
-		return licensesInArrayList;
-    	
+		return licensesInArrayList;   	
     }
     
-    public void printLicenseIfAcronym(String a, ArrayList<String> b) {
+    public void printLicenseIfAcronym(String a, ArrayList<String> b) { //If the web page has any licenses (acronym), it will print the license.
     	
-    	for(int i = 0; i < b.size(); i++){ //Cross references the ArrayList with the licenses against the contents of the webpage.
+    	for(int i = 0; i < b.size(); i++){ //Cross references the ArrayList of licenses against the contents of the web page.
 			if(a.contains(b.get(i))){     
 				System.out.println(b.get(i));
 			}

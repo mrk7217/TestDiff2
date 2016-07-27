@@ -33,7 +33,7 @@ public class NonPOMFile {
 		return result; //Returns the URL content into String "result".
 	}
 	
-	public ArrayList<String> prepareLicensesIfFullName() throws FileNotFoundException{
+	public ArrayList<String> prepareLicensesIfFullName() throws FileNotFoundException{ //Puts the file with the licenses (full name) into an ArrayList.
 		File licensesFullName = new File ("/Users/maramuslea/git/TestDiff2/files/approvedLicensesFullName"); //Bring the File into the code.
 		ArrayList<String> licensesInArrayList = new ArrayList<String>(); //Prepare ArrayList to put the licenses with full names into it.
 		Scanner forLicenses = new Scanner(licensesFullName); //Prepare Scanner that is necessary to move the File to the ArrayList.
@@ -46,16 +46,17 @@ public class NonPOMFile {
 		return licensesInArrayList;
 	}
 	
- 	public void printLicenseIfFullName(String a, ArrayList<String> b) throws FileNotFoundException{
+ 	public void printLicenseIfFullName(String a, ArrayList<String> b) throws FileNotFoundException{ //If the spreadsheet URL content has any licenses (full name), it will print the license.
 	
-		for(int i = 0; i < b.size(); i++){ //Compares the String with the spreadsheet URL content with the ArrayList that has all of the licenses with full names.
+		for(int i = 0; i < b.size(); i++){ //Compares the spreadsheet URL content against the ArrayList of licenses (full names).
 			if(a.contains(b.get(i))){
 				System.out.println(b.get(i));
 			}
 		}
 	}
  	
- 	public ArrayList<String> prepareLicensesIfAcronym() throws FileNotFoundException{
+ 	
+ 	public ArrayList<String> prepareLicensesIfAcronym() throws FileNotFoundException{ //Puts the file with the licenses (acronym) into an ArrayList.
     	File licensesAcronym = new File ("/Users/maramuslea/Documents/approvedLicensesAcronym.txt"); //Bring the File into the code.
 		ArrayList<String> licensesInArrayList = new ArrayList<String>(); //Prepare ArrayList to put the licenses with full names into it.
 		Scanner forLicenses = new Scanner(licensesAcronym); //Prepare Scanner that is necessary to move the File to the ArrayList.
@@ -69,9 +70,9 @@ public class NonPOMFile {
     	
     }
  	
- 	public void printLicenseIfAcronym(String a, ArrayList<String> b) {
+ 	public void printLicenseIfAcronym(String a, ArrayList<String> b) { //If the spreadsheet URL content has any licenses (acronym), it will print the license.
     	
-    	for(int i = 0; i < b.size(); i++){ //Cross references the ArrayList with the licenses against the contents of the webpage.
+    	for(int i = 0; i < b.size(); i++){ //Cross references the ArrayList of licenses against the contents of the spreadsheet URL content.
 			if(a.contains(b.get(i))){     
 				System.out.println(b.get(i));
 			}
