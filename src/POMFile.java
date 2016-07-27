@@ -70,7 +70,7 @@ public class POMFile {
 	}
 	
 	public ArrayList<String> prepareLicensesIfFullName() throws FileNotFoundException{ //Puts the file with the licenses (full name) into an ArrayList.
-		File licensesFullName = new File ("/Users/maramuslea/git/TestDiff2/files/approvedLicensesFullName"); //Bring the File into the code.
+		File licensesFullName = new File ("/Users/maramuslea/Documents/approvedLicensesFullName"); //Bring the File into the code.
 		ArrayList<String> licensesInArrayList = new ArrayList<String>(); //Prepare ArrayList to put the licenses with full names into it.
 		Scanner forLicenses = new Scanner(licensesFullName); //Prepare Scanner that is necessary to move the File to the ArrayList.
 		
