@@ -1,109 +1,125 @@
 import org.junit.Test;
 
-public class UpdateLicense {
-  /* Psuedo Program Control
-   * 
-   * bool sameLicense = false
-   * check license detailed? (need to know if these actually mean same licenses)
-   * 
-   * 
-   * **need to check to see if second file has an updated license, if it does then skip down one
-   * check url
-   * 	if same 
-   * 		sameLicense = true
-   * 	else
-   * 		open files (using wget)
-   * 		fileread
-   * 		filecomptest
-   * 			if same 
-   * 				sameLicense = true
-   * 			if differences<certain num of characters
-   * 				check with user
-   * 					if user says same	
-   * 						sameLicense = true 
-   * //dont need else for sameLicense being false because it starts out as false
-   *  \
-   *  
-   *  if !sameLicense 
-   *  	run process again with following url
-   *  else 
-   *  	write license to updated license column (where will it get the license name??)
-   *  
-   * 
-   * 
-   */
+import java.io.File;
+
+//to run through a csv sheet and update the licenses by comparing url 
+//and file contents as well as user input when the system can not self-determine the updated license
+public class UpdateLicense { 
+	private final String csvFilename = "/Users/margaretknoblock/Downloads/otherLicenses.csv"; //csv file to read in
+	FileCompTest fileTester = new FileCompTest();
 	FileRead fileReader = new FileRead();
+	FileWrite fileWriter = new FileWrite();
+	WGet fileGetter = new WGet();
 	int currentRow = 1; //cant start at row zero because titles are there
-	final int licenseCol = 5;
+	String currentLicense; 
+	String [][] updatedSheetInfo; //creates empty 2d string array for all the updated sheet information
+	
+	//hard coded to fit the format of otherLicense.csv sheet
+	final int licenseCol = 5; 
 	final int licenseDetailedCol = 6;
 	final int urlCol = 7;
 	final int updatedLicenseCol = 9;
-	boolean sameLicense = false;
 	
 	@Test
-	public void updateLicenses(){
-		fileReader.openFile();
+	public void updateLicenses(){ //runs through sheet and updated licenses in the updated licenses column
+		fileReader.openFile(csvFilename); 
+		init();
 		checkSameLicense();
-		fileReader.closeFile();//should put at reached end once done testing
-	}
-	
-	public void checkSameLicense(){
-		//if licensedetailed the same means same license add that if statement in here (would not be other)
-		if (fileReader.accessFile(currentRow+1, updatedLicenseCol).isEmpty()){ //checks to see if second url already has a license
-			if (fileReader.accessFile(currentRow,urlCol) == fileReader.accessFile(currentRow+1, urlCol)){
-				System.out.println("Same Url");
-			}
-			else{
-				String urlName1 = fileReader.accessFile(currentRow, urlCol);
-				String urlName2 = fileReader.accessFile(currentRow+1, urlCol);
-				String urlEnd1 = (urlName1.substring(urlName1.lastIndexOf('.') + 1));
-				String urlEnd2 = (urlName2.substring(urlName2.lastIndexOf('.') + 1));
-				String ul1 = fileReader.accessFile(currentRow, licenseDetailedCol);
-				String ul2 = fileReader.accessFile(currentRow+1, licenseDetailedCol);
-				//checks to see if they are both pom files and have the same license detailed column (that isn't other)
-				if (((urlEnd1.equals("pom")) && (urlEnd2.equals("pom"))) && (!fileReader.accessFile(currentRow, licenseDetailedCol).equals("Other")) && (ul1.equals(ul2))){
-					System.out.println("Same license detailed (both pom)");
-				}
-				else{
-					System.out.println("Not same url or same detailed");
-					//need to do wget and file comparison
-				}
-			}
-		}
-		else{ //if second url already has a license, moves to next one
-			System.out.println("not empty");
-			System.out.println(fileReader.accessFile(currentRow+1, updatedLicenseCol));
-			//nextURL();
-		}
 		
-		if (sameLicense){
-			//write in updated license
-		}
-		else{
-			//write in stars or somethin else
-		}
-		
+		fileReader.closeFile(); //should put at reached end once done testing
+		writeLicense(); //writes to new spreadsheet
 	}
 	
-	public void writeLicense(){
-		//run if licenses are the same
+	public void checkSameLicense(){ //checks to see if the two rows have the same license
+		for(currentRow = 1; currentRow<fileReader.numRows() - 2; currentRow++){
+			if (fileReader.accessFile(currentRow+1, updatedLicenseCol).isEmpty()){ //checks to see if second url already has a license
+				if (fileReader.accessFile(currentRow,urlCol).equals(fileReader.accessFile(currentRow+1, urlCol))){ //if urls for first and second row are the same
+					addRowNewLice(currentRow+1); //add the row with the new license
+				}	
+				else{ // urls not same so checks license detailed
+					String urlName1 = fileReader.accessFile(currentRow, urlCol);
+					String urlName2 = fileReader.accessFile(currentRow+1, urlCol);
+					String urlEnd1 = (urlName1.substring(urlName1.lastIndexOf('.') + 1)); 
+					String urlEnd2 = (urlName2.substring(urlName2.lastIndexOf('.') + 1));
+					String ul1 = fileReader.accessFile(currentRow, licenseDetailedCol);
+					String ul2 = fileReader.accessFile(currentRow+1, licenseDetailedCol);
+					//checks to see if they are both pom files and have the same license detailed column (that isn't other)
+					if (((urlEnd1.equals("pom")) && (urlEnd2.equals("pom"))) && (!fileReader.accessFile(currentRow, licenseDetailedCol).equals("Other")) && (ul1.equals(ul2))){
+						addRowNewLice(currentRow+1); //if same license detailed adds row with the new license
+					}
+					else{ //need to open files to compare
+						//System.out.println((currentRow+1) + " " + (currentRow+2));
+						//System.out.println("Not same url or same detailed");
+						
+						String file1Name = getFile(currentRow); //creates file and saves full path name as a string
+						String file2Name = getFile(currentRow + 1);
+						File fileOne = new File(file1Name);
+						File fileTwo = new File(file2Name);
+						
+						if (fileTester.shouldGetChangesBetweenFiles(fileOne, fileTwo)){
+							addRowNewLice(currentRow+1);}
+						else{
+							System.out.println("Row " + (currentRow+2) + " does not have an autofilled license. Please fill manually.");
+							addRow(currentRow+1);}
+						
+						
+						//if mik's code sets a different updated license, should change current license
+					}	
+				}
+			}
+			else{ //if second url already has a license, moves to next one
+				addRow(currentRow+1); //add the second row without changing the license
+				currentLicense = fileReader.accessFile(currentRow+1, updatedLicenseCol); //changes current license to what is ther
+			}
+		}
+		addRow(fileReader.numRows() -1); //fills in last row with the updated license
 	}
 	
-	public void nextURL(){
-		//runs if licenses are different or if second file has already been licensed
-		if (!reachedEnd()){
-			currentRow += 1;
-			checkSameLicense();
-		}
-		else {
-			System.out.println("Reached end of spreadsheet");
-		}
+	public void init(){ //initializes updated sheet info, sets current license and puts in title row of updatedSheetInfo
+		updatedSheetInfo = new String[fileReader.numRows()][fileReader.numCols()];
+		currentLicense = fileReader.accessFile(currentRow, updatedLicenseCol);
+		addRow(0); //adds title row to new spreadsheet
+		addRow(1); //adds first row to new spreadsheet (assuming first url already has a license)
 	}
 	
-	public boolean reachedEnd(){
-		if(currentRow==fileReader.numRows()-2) //subtract two to get second to last location (starts at location 0) 
-			return true;
-		else
-			return false;
+	public String getFile(int row){ //creates file from url and returns the path of the file as a string
+		File newFile = fileGetter.getFile(fileReader.accessFile(row, urlCol));
+		String filePath = fileGetter.getFilePath(newFile);
+		return filePath;
+	}
+	
+	public void addRow(int rowNum){ //if no license change
+		String [] row = fileReader.getRow(rowNum); //gets row from file
+		for(int i=0;i<updatedSheetInfo[0].length;i++) //adds all elements of row to updated sheet info
+			updatedSheetInfo[rowNum][i] = checkCommas(row[i]); //makes sure no commas are in there
+	}
+	
+	public void addRowNewLice(int rowNum){ //if the license changes
+		String [] row = fileReader.getRow(rowNum); //gets row from file 
+		for(int i=0;i<updatedSheetInfo[0].length;i++) //adds all elements of row to updated sheet info
+			updatedSheetInfo[currentRow+1][i] = checkCommas(row[i]);
+		updatedSheetInfo[currentRow+1][updatedLicenseCol] = currentLicense; //changes license column to the updated license
+	}
+	
+	//removes any commas from a string (commas screw up the array format when writing into a spreadsheet)
+	public String checkCommas(String info){ 
+		String newInfo = "";
+		for(int i =0; i < info.length(); i++){
+			if (info.charAt(i) != ',')
+				newInfo += info.charAt(i);
+		}
+		return newInfo;
+	}
+	
+	public void writeLicense(){ //writes everything from 2d array updateSheetInfo into a new csv file
+		fileWriter.writeSpreadsheet(updatedSheetInfo, csvFilename);	
+		System.out.println("writing sheet");
+	}
+	
+	
+	public void test(){
+		for (currentRow = 1; currentRow <fileReader.numRows() - 2; currentRow++){
+			System.out.println(currentRow);
+		}
 	}
 }
