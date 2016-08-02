@@ -1,0 +1,25 @@
+<?xml version="1.0"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>net.sourceforge.findbugs</groupId>
+  <artifactId>findbugs-ant</artifactId>
+  <name></name>
+  <version>1.1.1</version>
+  <description>AntTask to run Findbugs</description>
+  <url>http://findbugs.sf.net</url>
+  <licenses>
+    <license>
+      <name></name>
+      <url></url>
+    </license>
+  </licenses>
+  <scm>
+    <connection>scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/findbugs/findbugs</connection>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>net.sourceforge.findbugs</groupId>
+      <artifactId>findbugs</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+  </dependencies>
+</project>

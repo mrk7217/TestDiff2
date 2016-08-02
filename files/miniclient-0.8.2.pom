@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+<!--   For OSSRH on SonaType  -->
+<!--  -->
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
+<!--  -->
+
+
+  <groupId>org.aerysoft.miniclient</groupId>
+  <artifactId>miniclient</artifactId>
+  <version>0.8.2</version>
+  <packaging>pom</packaging>
+
+  <name>MiniClient</name>
+  <description>Universal REST API client library in Java</description>
+  <url>http://www.miniclient.org/</url>
+  <inceptionYear>2013</inceptionYear>
+  <licenses>
+    <license>
+      <name>The Do-No-Evil License, Version 1.0</name>
+      <url>http://www.noevils.org/licenses/donoevil-1.0.html</url>
+      <distribution>repo</distribution>
+      <comments>A no-strings-attached open source license.</comments>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>harry</id>
+      <name>Harry Y</name>
+      <email>harrywye@gmail.com</email>
+      <url>http://www.harrywye.com/</url>
+      <organization>Aery Software</organization>
+      <organizationUrl>http://www.aerysoft.com/</organizationUrl>
+      <roles>
+        <role>architect</role>
+        <role>developer</role>
+      </roles>
+      <timezone>-7</timezone>
+    </developer>
+  </developers>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
+    <!-- github server corresponds to entry in ~/.m2/settings.xml -->
+<!--
+    <github.global.server>github.harrywye</github.global.server>
+-->
+    <github.global.server>github.harrywye.ghsite</github.global.server>
+  </properties>
+
+  <scm>
+    <connection>scm:git:ssh://github.com/harrywye/miniclient.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/harrywye/miniclient.git</developerConnection>
+    <url>https://github.com/harrywye/miniclient</url>
+    <tag>v0.8.2</tag>
+  </scm>
+
+  <distributionManagement>
+
+<!--   For OSSRH on SonaType  -->
+<!--  -->
+	<snapshotRepository>
+		<id>sonatype-nexus-snapshots</id>
+		<name>Sonatype Nexus snapshot repository</name>
+		<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+	</snapshotRepository>
+	<repository>
+		<id>sonatype-nexus-staging</id>
+		<name>Sonatype Nexus release staging repository</name>
+		<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+	</repository>
+<!--  -->
+
+<!--
+    <repository>
+      <id>internal.repo</id>
+      <name>Temporary Staging Repository</name>
+      <url>file://${project.build.directory}/mvn-repo</url>
+    </repository>
+-->
+<!--
+    <site>
+      <id>miniclient.home</id>
+      <name>MiniClient Project Home Page</name>
+      <url>scp://www.miniclient.org/</url>
+    </site>
+-->
+  </distributionManagement>
+
+<profiles>
+  <!--  This profile will be used during release:perform  -->
+<!-- 
+  <profile>
+    <id>release-sign-artifacts</id>
+    <activation>
+      <property>
+        <name>performRelease</name>
+        <value>true</value>
+      </property>
+    </activation>
+    <build>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>1.4</version>
+            <configuration>
+                <passphrase>${gpg.passphrase}</passphrase>
+            </configuration>
+          <executions>
+            <execution>
+              <id>sign-artifacts</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>sign</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </build>
+  </profile>
+-->
+</profiles>
+
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+<!--
+          <verbose>true</verbose>
+          <fork>true</fork>
+-->
+          <source>1.6</source>
+          <target>1.6</target>
+<!--
+          <compilerArguments>
+            <bootclasspath>${env.JAVA6_HOME}/jre/lib/rt.jar</bootclasspath>
+          </compilerArguments>
+-->
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9.1</version>
+        <configuration>
+          <show>protected</show>
+          <nohelp>true</nohelp>
+        </configuration>
+      </plugin>
+<!--
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+        <configuration>
+          <locales>en,fr</locales>
+        </configuration>
+      </plugin>
+-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.4.1</version>
+        <configuration>
+<!-- 
+          <tagNameFormat>@{project.groupId}-@{project.version}</tagNameFormat>
+-->
+          <tagNameFormat>v@{project.version}</tagNameFormat>
+          <preparationGoals>clean verify</preparationGoals>
+          <goals>deploy</goals>
+<!-- 
+          <goals>deploy site-deploy</goals>
+-->
+<!--  
+          <mavenExecutorId>forked-path</mavenExecutorId>
+          <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
+-->
+        </configuration>
+      </plugin>
+<!-- -->
+
+        <!--   This will be used for both snapshot/release deploy.  -->
+<!--  -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>1.4</version>
+            <configuration>
+                <passphrase>${gpg.passphrase}</passphrase>
+            </configuration>
+          <executions>
+            <execution>
+              <id>sign-artifacts</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>sign</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!--   Automating OSSRH staging to release  -->
+<!--
+        <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>1.1</version>
+            <extensions>true</extensions>
+            <configuration>
+                <nexusUrl>https://oss.sonatype.org/service/local/staging/deploy/maven2/</nexusUrl>
+                <serverId>sonatype-nexus-staging</serverId>
+            </configuration>
+        </plugin>
+-->
+<!--  -->
+
+<!--  -->
+      <plugin>
+        <groupId>com.github.github</groupId>
+        <artifactId>site-maven-plugin</artifactId>
+        <version>0.9</version>
+        <executions>
+          <execution>
+            <id>site.project-website</id>
+            <goals>
+              <goal>site</goal>
+            </goals>
+            <phase>site</phase>
+            <configuration>
+              <message>Creating site for ${project.version}</message>
+              <path>repo</path>
+              <merge>true</merge>
+            </configuration>
+          </execution>
+<!--
+          <execution>
+            <id>site.maven-repo</id>
+            <goals>
+              <goal>site</goal>
+            </goals>
+            <phase>deploy</phase>
+	        <configuration>
+	          <message>Maven artifacts for ${project.version}</message>
+	          <noJekyll>true</noJekyll>
+	          <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
+	          <branch>refs/heads/mvn-repo</branch>
+	          <includes><include>**/*</include></includes>
+	          <repositoryOwner>harrywye</repositoryOwner>
+	          <repositoryName>miniclient</repositoryName>
+	        </configuration>
+          </execution>
+-->
+        </executions>
+      </plugin>
+<!-- -->
+    </plugins>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9.1</version>
+        <configuration>
+<!--
+        <stylesheetfile>${basedir}/src/main/javadoc/stylesheet.css</stylesheetfile>
+-->
+          <show>public</show>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <modules>
+    <module>miniclient-json</module>
+    <module>miniclient-core</module>
+    <module>miniclient-ext</module>
+    <module>miniclient-core-mock</module>
+    <module>miniclient-ext-mock</module>
+    <module>miniclient-tool</module>
+  </modules>
+</project>

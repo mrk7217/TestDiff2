@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>jython</groupId>
+  <artifactId>jython</artifactId>
+  <name>Jython</name>
+  <version>2.2-alpha1</version>
+  <description>Jython is an implementation of the high-level, dynamic, object-oriented language Python written in 100% Pure Java, and seamlessly integrated with the Java platform. It thus allows you to run Python on any Java platform.</description>
+  <url>http://www.jython.org</url>
+  <licenses>
+    <license>
+      <name>BeOpen / CNRI license</name>
+      <url>http://www.jython.org/Project/license.txt</url>
+    </license>
+  </licenses>
+</project>

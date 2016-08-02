@@ -10,20 +10,35 @@ import java.util.Scanner;
 public class POMFile {
 		
 	private File pomFile;   
+	ArrayList<String> licensesFullNameInArrayList;
+	ArrayList<String> licensesAcronymInArrayList;
 	
-	public POMFile(File pomFile){
-		this.pomFile = pomFile;
+	public POMFile(){
 	}
 	
-	public static void main(String[] args) throws IOException{
-		POMFile pom = new POMFile(new File("/Users/maramuslea/Documents/examplePOMFile.txt"));
-		String pomContent = pom.readFirstPOMPageToString();
-		String goodURL = pom.findURL(pomContent);
-		String contentOfWebpage = pom.webpage(goodURL);
-		ArrayList<String> licensesFullNameInArrayList = pom.prepareLicensesIfFullName();
-		pom.printLicenseIfFullName(contentOfWebpage, licensesFullNameInArrayList);
-		ArrayList<String> licensesAcronymInArrayList = pom.prepareLicensesIfAcronym();
-		pom.printLicenseIfAcronym(contentOfWebpage, licensesAcronymInArrayList);
+	
+	
+	public String getLicense(String fileName) throws IOException{
+		pomFile = new File(fileName);
+		String pomContent;
+		pomContent = readFirstPOMPageToString();
+		
+		String goodURL = findURL(pomContent);
+		String contentOfWebpage = webpage(goodURL);
+		String fullName = returnLicenseIfFullName(contentOfWebpage, licensesFullNameInArrayList);
+		
+		String acr = returnLicenseIfAcronym(contentOfWebpage, licensesAcronymInArrayList);
+		return(fullName + " " + acr);
+	}
+	
+	public void init(){
+		try {
+			licensesFullNameInArrayList = prepareLicensesIfFullName();
+			licensesAcronymInArrayList = prepareLicensesIfAcronym();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public String readFirstPOMPageToString() throws FileNotFoundException { //The entire POM file is moved into a String that retains the file's structure.
@@ -70,7 +85,7 @@ public class POMFile {
 	}
 	
 	public ArrayList<String> prepareLicensesIfFullName() throws FileNotFoundException{
-		File licensesFullName = new File ("/Users/maramuslea/git/TestDiff2/files/approvedLicensesFullName"); //Bring the File into the code.
+		File licensesFullName = new File ("/Users/margaretknoblock/Documents/workspace/TestDiff2/licenseNames/approvedLicensesFullName.txt"); //Bring the File into the code.
 		ArrayList<String> licensesInArrayList = new ArrayList<String>(); //Prepare ArrayList to put the licenses with full names into it.
 		Scanner forLicenses = new Scanner(licensesFullName); //Prepare Scanner that is necessary to move the File to the ArrayList.
 		
@@ -82,17 +97,18 @@ public class POMFile {
 		return licensesInArrayList;
 	}
 	
-    public void printLicenseIfFullName(String a, ArrayList<String> b) throws FileNotFoundException{
-    	
+    public String returnLicenseIfFullName(String a, ArrayList<String> b) throws FileNotFoundException{
+    	String licenseName = "";
 		for(int i = 0; i < b.size(); i++){ //Cross references the ArrayList with the licenses against the contents of the webpage.
 			if(a.contains(b.get(i))){     
-				System.out.println(b.get(i));
+				licenseName += (b.get(i) + ", ");
 			}
 		}
+		return licenseName;
 	}
     
     public ArrayList<String> prepareLicensesIfAcronym() throws FileNotFoundException{
-    	File licensesAcronym = new File ("/Users/maramuslea/Documents/approvedLicensesAcronym.txt"); //Bring the File into the code.
+    	File licensesAcronym = new File ("/Users/margaretknoblock/Documents/workspace/TestDiff2/licenseNames/approvedLicensesAcronym.txt"); //Bring the File into the code.
 		ArrayList<String> licensesInArrayList = new ArrayList<String>(); //Prepare ArrayList to put the licenses with full names into it.
 		Scanner forLicenses = new Scanner(licensesAcronym); //Prepare Scanner that is necessary to move the File to the ArrayList.
 		
@@ -105,12 +121,13 @@ public class POMFile {
     	
     }
     
-    public void printLicenseIfAcronym(String a, ArrayList<String> b) {
-    	
+    public String returnLicenseIfAcronym(String a, ArrayList<String> b) {
+    	String licenseAcr = "";
     	for(int i = 0; i < b.size(); i++){ //Cross references the ArrayList with the licenses against the contents of the webpage.
-			if(a.contains(b.get(i))){     
-				System.out.println(b.get(i));
+			if(a.contains(b.get(i))){
+				licenseAcr += (b.get(i) + ", ");
 			}
 		}
+    	return licenseAcr;
     }
 }
