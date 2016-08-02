@@ -66,11 +66,11 @@ public class POMFile {
 		}else {
 			a = "";
 		}
-
+		
 		return a;
 	}
 	
-	public String webpage(String a) throws IOException{	//Opens the URL from the POM file, then reads and saves the contents of the entire webpage.
+	public String webpage(String a) throws IOException{	//Opens the URL from the POM file, then reads and saves the contents of the entire web page.
 		URL theURL = new URL(a);                        
         BufferedReader in = new BufferedReader(new InputStreamReader(theURL.openStream()));
 
@@ -80,7 +80,7 @@ public class POMFile {
             webpageWithLicense += inputLine;
         }
         in.close();
-
+        
         return webpageWithLicense;
 	}
 	
@@ -112,15 +112,15 @@ public class POMFile {
 		ArrayList<String> licensesInArrayList = new ArrayList<String>(); //Prepare ArrayList to put the licenses with full names into it.
 		Scanner forLicenses = new Scanner(licensesAcronym); //Prepare Scanner that is necessary to move the File to the ArrayList.
 		
-		while(forLicenses.hasNextLine()){ //Input the licenses with full names into the ArrayList. Each index is its own license.
+		while(forLicenses.hasNextLine()){ //Input the licenses (acronym) into the ArrayList. Each index is its own license. Their is a space before and after the acronyms to ensure only true licenses (and not random words) are found.
 			licensesInArrayList.add(" " + forLicenses.nextLine() + " ");	
 		}
 		forLicenses.close();
 		
-		return licensesInArrayList;
-    	
+		return licensesInArrayList;   	
     }
     
+
     public String returnLicenseIfAcronym(String a, ArrayList<String> b) {
     	String licenseAcr = "";
     	for(int i = 0; i < b.size(); i++){ //Cross references the ArrayList with the licenses against the contents of the webpage.
