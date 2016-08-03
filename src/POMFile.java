@@ -19,7 +19,7 @@ public class POMFile {
 		
 		String goodURL = findURL(pomContent);
 		String contentOfWebpage = webpage(goodURL);
-		String fullName = returnLicenseIfFullName(contentOfWebpage, licensesFullNames);
+		String fullName = returnLicenseIfFullName(contentOfWebpage, licensesFullNames, licensesAcronyms);
 		
 		String acr = returnLicenseIfAcronym(contentOfWebpage, licensesAcronyms);
 		return(fullName + " " + acr);
@@ -69,30 +69,27 @@ public class POMFile {
         return webpageWithLicense;
 	}
 	
-    public String returnLicenseIfFullName(String a, ArrayList<String> b) throws FileNotFoundException{
-    	String licenseName = "";
-		for(int i = 0; i < b.size(); i++){ //Cross references the ArrayList with the licenses against the contents of the webpage.
-			if(a.contains(b.get(i))){     
-				licenseName += (b.get(i) + ", ");
+    public String returnLicenseIfFullName(String a, ArrayList<String> licenseNames, ArrayList<String> licenseAcrs){
+    	String license = "";
+		for(int i = 0; i < licenseNames.size(); i++){ //Cross references the ArrayList with the licenses against the contents of the webpage.
+			if(a.contains(licenseNames.get(i))){
+				//if((i<licenseAcrs.size())){ //for getting just acronyms but must line up names and acronyms in text file
+					//license += (licenseAcrs.get(i) + ", ");
+					//System.out.println(licenseAcrs.get(i));}
+				//else{
+				license += (licenseNames.get(i) + ", ");
 			}
-		}
-		if (licenseName.isEmpty())
-			return licenseName;
-		else
-			return licenseName.substring(0, licenseName.length()-2);
+		}		
+		return license;
 	}
 
-    public String returnLicenseIfAcronym(String a, ArrayList<String> b) {
-    	String licenseAcr = "";
-    	for(int i = 0; i < b.size(); i++){ //Cross references the ArrayList with the licenses against the contents of the webpage.
-			if(a.contains(b.get(i))){
-				licenseAcr += (b.get(i) + ", ");
-				licenseAcr = licenseAcr.substring(0, licenseAcr.length()-2);
+    public String returnLicenseIfAcronym(String a, ArrayList<String> licenseNames) {
+    	String license = "";
+    	for(int i = 0; i < licenseNames.size(); i++){ //Cross references the ArrayList with the licenses against the contents of the webpage.
+			if(a.contains(licenseNames.get(i))){
+				license += (licenseNames.get(i) + ", " );
 			}
 		}
-    	if (licenseAcr.isEmpty())
-			return licenseAcr;
-		else
-			return licenseAcr.substring(0, licenseAcr.length()-2);
+		return license;
     }
 }

@@ -39,12 +39,12 @@ public class NonPOMFile {
  
  	
  	public String returnLicenseIfAcronym(String a, ArrayList<String> b) { //If the spreadsheet URL content has any licenses (acronym), it will print the license.
-    	String licenseName = "";
+    	String licenseAcr = "";
     	for(int i = 0; i < b.size(); i++){ //Cross references the ArrayList of licenses against the contents of the spreadsheet URL content.
 			if(a.contains(b.get(i))){     
-				licenseName += (b.get(i) + ", ");
+				licenseAcr += (b.get(i) + ", ");
 			}
 		}
-    	return licenseName;
+		return licenseAcr;
     }
 } 

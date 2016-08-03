@@ -60,6 +60,8 @@ public class UpdateLicense {
 			}
 			if (license.equals(" "))
 				countEmpty+=1;
+			else
+				license = license.substring(0, license.length()-2);
 			addRowNewLice(license);
 		}
 		System.out.println("There are " + countEmpty + " empty rows.");
