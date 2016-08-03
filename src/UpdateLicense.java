@@ -1,18 +1,25 @@
 import org.junit.Test;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
-//NEED TO WORK THROUGH NONPOMFILE.JAVA to make compatible with updatelicense.java
 public class UpdateLicense { 
 	private final String csvFilename = "/Users/margaretknoblock/Desktop/moreTest.csv"; //csv file to read in
 	POMFile pom = new POMFile();
+	NonPOMFile nonPOM = new NonPOMFile();
 	FileRead fileReader = new FileRead();
 	FileWrite fileWriter = new FileWrite();
 	WGet fileGetter = new WGet();
 	int currentRow = 1; //cant start at row zero because titles are there
 	String currentLicense; 
 	String [][] updatedSheetInfo; //creates empty 2d string array for all the updated sheet information
+	
+	ArrayList<String> licensesFullNames; //initializes arraylist to hold all license names
+	ArrayList<String> licensesAcronyms; //initializes arraylist to hold all license acronyms
+	int countEmpty = 0;
 	
 	//hard coded to fit the format of otherLicense.csv sheet
 	final int licenseCol = 5; 
@@ -25,7 +32,6 @@ public class UpdateLicense {
 		fileReader.openFile(csvFilename); 
 		init();
 		findLicense();
-		
 		fileReader.closeFile(); //should put at reached end once done testing
 		writeLicense(); //writes to new spreadsheet
 	}
@@ -37,18 +43,26 @@ public class UpdateLicense {
 			fileName = getFile(currentRow); //creates file and saves full path name as a string
 			String urlName = fileReader.accessFile(currentRow, urlCol);
 			if (urlName.substring(urlName.lastIndexOf('.') + 1).equals("pom")){ //check to see if pom
-				//System.out.println("ispom");
 				try {
-					System.out.println(pom.getLicense(fileName));
-					license = pom.getLicense(fileName) ;
+					license = pom.getLicense(fileName, licensesFullNames, licensesAcronyms) ;
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-			//add in scenario for nonpomfile.java here
+			else{
+				try {
+					license = nonPOM.getLicense(fileName, licensesFullNames, licensesAcronyms);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if (license.equals(" "))
+				countEmpty+=1;
 			addRowNewLice(license);
 		}
+		System.out.println("There are " + countEmpty + " empty rows.");
 	}
 	
 	
@@ -56,9 +70,45 @@ public class UpdateLicense {
 		updatedSheetInfo = new String[fileReader.numRows()][fileReader.numCols()];
 		currentLicense = fileReader.accessFile(currentRow, updatedLicenseCol);
 		addRow(0); //adds title row to new spreadsheet
-		pom.init();
+		initLicenseNames();
 	}
 	
+	public void initLicenseNames(){
+		try {
+			licensesFullNames = prepareLicenseFullNames();
+			licensesAcronyms = prepareLicenseAcronyms();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public ArrayList<String> prepareLicenseFullNames() throws FileNotFoundException{
+		File licensesFullName = new File ("/Users/margaretknoblock/Documents/workspace/TestDiff2/licenseNames/approvedLicensesFullName.txt"); //Bring the File into the code.
+		ArrayList<String> licensesInArrayList = new ArrayList<String>(); //Prepare ArrayList to put the licenses with full names into it.
+		Scanner forLicenses = new Scanner(licensesFullName); //Prepare Scanner that is necessary to move the File to the ArrayList.
+		
+		while(forLicenses.hasNextLine()){ //Input the licenses with full names into the ArrayList. Each index is its own license.
+			licensesInArrayList.add(forLicenses.nextLine());	
+		}
+		forLicenses.close();
+		
+		return licensesInArrayList;
+	}
+	
+	public ArrayList<String> prepareLicenseAcronyms() throws FileNotFoundException{
+    	File licensesAcronym = new File ("/Users/margaretknoblock/Documents/workspace/TestDiff2/licenseNames/approvedLicensesAcronym.txt"); //Bring the File into the code.
+		ArrayList<String> licensesInArrayList = new ArrayList<String>(); //Prepare ArrayList to put the licenses with full names into it.
+		Scanner forLicenses = new Scanner(licensesAcronym); //Prepare Scanner that is necessary to move the File to the ArrayList.
+		
+		while(forLicenses.hasNextLine()){ //Input the licenses (acronym) into the ArrayList. Each index is its own license. Their is a space before and after the acronyms to ensure only true licenses (and not random words) are found.
+			licensesInArrayList.add(" " + forLicenses.nextLine() + " ");	
+		}
+		forLicenses.close();
+		
+		return licensesInArrayList;   	
+    }
+    
 	public String getFile(int row){ //creates file from url and returns the path of the file as a string
 		File newFile = fileGetter.getFile(fileReader.accessFile(row, urlCol));
 		String filePath = fileGetter.getFilePath(newFile);
