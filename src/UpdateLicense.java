@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UpdateLicense { 
-	private final String csvFilename = "/Users/margaretknoblock/Desktop/moreTest.csv"; //csv file to read in
+	private final String csvFilename = "/Users/margaretknoblock/Downloads/otherLicenses.csv"; //csv file to read in
 	POMFile pom = new POMFile();
 	NonPOMFile nonPOM = new NonPOMFile();
 	FileRead fileReader = new FileRead();
@@ -58,10 +58,11 @@ public class UpdateLicense {
 					e.printStackTrace();
 				}
 			}
-			if (license.equals(" "))
+			if (license.equals(" ")){
 				countEmpty+=1;
-			else
-				license = license.substring(0, license.length()-2);
+				System.out.println(currentRow+1);}
+			else{
+				license = license.substring(0, license.length()-2);}
 			addRowNewLice(license);
 		}
 		System.out.println("There are " + countEmpty + " empty rows.");
