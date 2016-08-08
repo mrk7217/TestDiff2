@@ -14,7 +14,6 @@ public class UpdateLicense {
 	FileWrite fileWriter = new FileWrite();
 	WGet fileGetter = new WGet();
 	int currentRow = 1; //cant start at row zero because titles are there
-	String currentLicense; 
 	String [][] updatedSheetInfo; //creates empty 2d string array for all the updated sheet information
 	
 	ArrayList<String> licensesFullNames; //initializes arraylist to hold all license names
@@ -58,12 +57,12 @@ public class UpdateLicense {
 					e.printStackTrace();
 				}
 			}
-			if (license.equals(" ")){
-				countEmpty+=1;
-				System.out.println(currentRow+1);}
+			if (license.equals(" ")){ //if updated license is left blank by the classifier
+				countEmpty+=1; //adds to a counter of the empty rows
+				System.out.println(currentRow+1);} //prints the empty rows (for testing purposes. this can be removed)
 			else{
-				license = license.substring(0, license.length()-2);}
-			addRowNewLice(license);
+				license = license.substring(0, license.length()-2);} // gets rid of comma at the end
+			addRowNewLice(license); //adds row to the 2d array that will later be written to the spreadsheet
 		}
 		System.out.println("There are " + countEmpty + " empty rows.");
 	}
@@ -71,12 +70,11 @@ public class UpdateLicense {
 	
 	public void init(){ //initializes updated sheet info, sets current license and puts in title row of updatedSheetInfo
 		updatedSheetInfo = new String[fileReader.numRows()][fileReader.numCols()];
-		currentLicense = fileReader.accessFile(currentRow, updatedLicenseCol);
 		addRow(0); //adds title row to new spreadsheet
 		initLicenseNames();
 	}
 	
-	public void initLicenseNames(){
+	public void initLicenseNames(){ //writes all known license names into a local arraylist
 		try {
 			licensesFullNames = prepareLicenseFullNames();
 			licensesAcronyms = prepareLicenseAcronyms();
