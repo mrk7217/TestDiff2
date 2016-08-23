@@ -1,6 +1,7 @@
 Academic Free License
 Adaptive Public License
 Apache License
+Apache 2.0 License
 Apple Public Source License
 Artistic license
 Attribution Assurance License
